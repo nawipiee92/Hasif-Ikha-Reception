@@ -17,7 +17,7 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS FOR PERFECT CENTERED WHITE CARD & FLORAL BACKGROUND ---
+# --- CUSTOM CSS: NO WHITE CARD, FULLY CENTERED DESIGN ---
 st.markdown(
     """
     <style>
@@ -33,69 +33,76 @@ st.markdown(
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Center container padding */
+    /* Center everything cleanly on the page with no boxes */
     .block-container {
-        padding-top: 5rem;
-        max-width: 720px;
-    }
-
-    /* Single Unified Solid White Card Container */
-    .cloud-card {
-        background-color: #ffffff;
-        padding: 45px 35px;
-        border-radius: 40px;
-        box-shadow: 0px 15px 35px rgba(0,0,0,0.25);
+        padding-top: 8rem;
+        max-width: 650px;
         text-align: center;
-        margin: auto;
     }
     
+    /* Center Streamlit text inputs and elements */
+    .stTextInput {
+        text-align: center;
+        margin: 0 auto;
+    }
+    
+    div[data-baseweb="input"] {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    /* Custom Text Styling */
     .title-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 24px;
+        font-size: 26px;
         font-weight: bold;
         color: #4a235a;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
+        text-align: center;
     }
     
     .welcome-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: bold;
         color: #7f8c8d;
         margin-top: 25px;
         letter-spacing: 1px;
+        text-align: center;
     }
     
     .guest-name {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 24px;
+        font-size: 26px;
         font-weight: bold;
         color: #1a1a2e;
         margin: 10px 0;
+        text-align: center;
     }
     
     .msg-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 13px;
+        font-size: 14px;
         color: #555555;
         margin-bottom: 15px;
+        text-align: center;
     }
     
     .table-badge {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 30px;
+        font-size: 32px;
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
+        text-align: center;
     }
     </style>
 """,
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT WRAPPED IN THE CARD ---
-st.markdown('<div class="cloud-card">', unsafe_allow_html=True)
-
+# --- APP LAYOUT (Directly on background, no card box) ---
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -107,7 +114,7 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box neatly centered inside the main card
+  # Search input box centered on screen
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
@@ -151,5 +158,3 @@ else:
           f'<div class="table-badge">⭐ Table {table_no} ⭐</div>',
           unsafe_allow_html=True,
       )
-
-st.markdown('</div>', unsafe_allow_html=True)
