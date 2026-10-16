@@ -46,9 +46,9 @@ st.markdown(
         text-align: center;
     }
     
-    /* Frosted Blue-White Translucent Glass Box wrapping the entire top section */
+    /* Unified Frosted Glass Card Box */
     .glass-card {
-        background-color: rgba(240, 244, 248, 0.88);
+        background-color: rgba(240, 244, 248, 0.90);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.7);
@@ -59,7 +59,7 @@ st.markdown(
         text-align: center;
     }
     
-    /* Search bar alignment inside the card */
+    /* Search box styling inside the glass card */
     .stTextInput {
         text-align: center;
         margin: 0 auto;
@@ -89,7 +89,7 @@ st.markdown(
         border-bottom: 1px solid #4a235a;
         height: 3px;
         width: 70%;
-        margin: 8px auto 18px auto;
+        margin: 8px auto 20px auto;
     }
     
     .welcome-text {
@@ -139,9 +139,10 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
-# Open the frosted glass card container
+# Open a single unified frosted glass card
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
+# Title and double underline are now safely INSIDE the glass card box
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -154,12 +155,12 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box nicely enclosed inside the glass card
+  # Search input box is also inside the glass card, directly underneath the title
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
 
-# Close the frosted glass card container properly
+# Close the glass card container
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
