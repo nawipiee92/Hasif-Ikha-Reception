@@ -221,7 +221,7 @@ st.markdown(
     """
     <div class="bottom-images-container">
         <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/123.png" alt="Reception Photo 1">
-        <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/123.png" alt="Reception Photo 2">
+        <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/234.png" alt="Reception Photo 2">
     </div>
 """,
     unsafe_allow_html=True,
