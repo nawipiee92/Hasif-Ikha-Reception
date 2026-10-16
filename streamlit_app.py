@@ -50,35 +50,24 @@ st.markdown(
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 20px auto;
-    }}
-
-    /* Top White Pill Box holding the Title */
-    .pill-header {{
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
-        padding: 10px 15px;
-        border-radius: 50px;
-        text-align: center;
-        box-shadow: 0px 2px 8px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
+        margin: 40px auto 20px auto;
     }}
 
     .title-text {{
+        text-align: center;
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 22px;
+        font-size: 24px;
         font-weight: bold;
         color: #4a235a;
-        margin: 0;
+        margin-bottom: 5px;
     }}
-    
     .welcome-text {{
         text-align: center;
         font-size: 13px;
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 15px;
+        margin-top: 20px;
     }}
     .guest-name {{
         text-align: center;
@@ -102,12 +91,6 @@ st.markdown(
         color: #c70039;
         margin-top: 12px;
     }}
-    
-    /* Image styling to keep them small and neat side-by-side */
-    .side-img {{
-        border-radius: 12px;
-        object-fit: cover;
-    }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -116,13 +99,13 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title INSIDE the top white pill box shape
+# Title & Divider directly inside the main card box (no extra top box)
 st.markdown(
-    """
-    <div class="pill-header">
-        <div class="title-text">✦ Hasif & Ikha Reception ✦</div>
-    </div>
-    """,
+    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div style='text-align: center; color: #4a235a; margin-bottom: 15px;'>══════════════════</div>",
     unsafe_allow_html=True,
 )
 
@@ -218,7 +201,4 @@ else:
       st.image('123.png', use_container_width=True)
   with col2:
     if os.path.exists('234.png'):
-      st.image('234.png', use_container_width=True)
-
-# --- END OF MAIN WHITE CARD BOX ---
-st.markdown('</div>', unsafe_allow_html=True)
+      st.
