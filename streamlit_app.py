@@ -155,7 +155,6 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
-# Render title and double underline inside a dedicated header card
 st.markdown(
     """
     <div class="title-card">
@@ -173,11 +172,57 @@ if df is None:
   )
   query = ''
 else:
-  # Search input box immediately follows, styled to form the bottom half of the card
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
 
 # --- RESULTS SECTION ---
 if query:
-  query_clean = query.strip().lower
+  query_clean = query.strip().lower()
+  results = df[
+      df['Name'].astype(str).str.lower().str.contains(query_clean, na=False)
+  ]
+
+  if results.empty:
+    st.markdown(
+        '<div class="welcome-text" style="color: #c70039;">❌ Guest not'
+        ' found</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="msg-text">Please check your spelling and try again.</div>',
+        unsafe_allow_html=True,
+    )
+  else:
+    row = results.iloc[0]
+    guest_name = row['Name']
+    table_no = row['Table No.']
+
+    st.markdown(
+        '<div class="welcome-text">— W E L C O M E —</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f'<div class="guest-name">✨ {guest_name} ✨</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="msg-text">We are overjoyed to celebrate our special day with'
+        ' you! 💕</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f'<div class="table-badge">⭐ Table {table_no} ⭐</div>',
+        unsafe_allow_html=True,
+    )
+
+# --- BOTTOM DECORATIVE IMAGES (123.png & 234.png) ---
+st.markdown(
+    """
+    <div class="bottom-images-container">
+        <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/123.png" alt="Reception Photo 1">
+        <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/123.png" alt="Reception Photo 2">
+    </div>
+""",
+    unsafe_allow_html=True,
+)
