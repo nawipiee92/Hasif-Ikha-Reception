@@ -20,17 +20,32 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING ---
+# --- CUSTOM CSS STYLING (With Border.png Background) ---
 st.markdown(
     """
     <style>
-    .main {
-        background-color: #f5f6f8;
+    .stApp {
+        background-image: url("Border.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }
+    
+    /* Main Content Container Card */
+    .main-card {
+        background-color: rgba(245, 246, 248, 0.95);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 4px 20px rgba(0,0,0,0.15);
+        max-width: 500px;
+        margin: auto;
+    }
+
     .title-text {
         text-align: center;
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: bold;
         color: #4a235a;
     }
@@ -40,25 +55,25 @@ st.markdown(
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 20px;
+        margin-top: 25px;
     }
     .guest-name {
         text-align: center;
         font-family: 'Century Gothic', sans-serif;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
         color: #1a1a2e;
         margin-top: 10px;
     }
     .message-text {
         text-align: center;
-        font-size: 14px;
+        font-size: 13px;
         color: #555555;
         margin-top: 10px;
     }
     .table-text {
         text-align: center;
-        font-size: 26px;
+        font-size: 20px;
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
@@ -68,13 +83,15 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP UI ---
+# --- APP UI CONTAINER ---
+st.markdown('<div class="main-card">', unsafe_allow_html=True)
+
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
 )
 st.markdown(
-    "<div style='text-align: center; color: #4a235a;'>══════════════════</div>",
+    "<div style='text-align: center; color: #4a235a; margin-bottom: 15px;'>══════════════════</div>",
     unsafe_allow_html=True,
 )
 
@@ -153,11 +170,11 @@ else:
             unsafe_allow_html=True,
         )
         results_list = '<br>'.join(
-            [f"• <b>{m['guest']}</b> -> {m['table']}" for m in matches]
+            [f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches]
         )
         st.markdown(
-            f'<div style="text-align: center; color: #c70039;'
-            f' font-size:16px;">{results_list}</div>',
+            f'<div style="text-align: center; color: #1a1a2e;'
+            f' font-size:15px; margin-top: 10px;">{results_list}</div>',
             unsafe_allow_html=True,
         )
         st.info('Please check the list above for the correct name.')
@@ -171,3 +188,5 @@ else:
   with col2:
     if os.path.exists('234.png'):
       st.image('234.png', use_container_width=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
