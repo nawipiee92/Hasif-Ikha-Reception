@@ -31,7 +31,7 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING ---
+# --- CUSTOM CSS STYLING (Double braces {{ }} used to prevent f-string syntax errors) ---
 st.markdown(
     f"""
     <style>
@@ -41,7 +41,7 @@ st.markdown(
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }
+    }}
     
     /* Main Content Container Card */
     .main-card {{
