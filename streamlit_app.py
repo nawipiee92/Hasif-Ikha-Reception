@@ -35,12 +35,15 @@ df_raw = load_data()
 st.markdown(
     f"""
     <style>
-    /* Remove default Streamlit top header and extra whitespace */
+    /* Completely remove Streamlit top header and extra containers */
     [data-testid="stHeader"] {{
         display: none !important;
     }}
+    [data-testid="stToolbar"] {{
+        display: none !important;
+    }}
     .block-container {{
-        padding-top: 1rem !important;
+        padding-top: 0.5rem !important;
         padding-bottom: 2rem !important;
     }}
 
@@ -52,7 +55,7 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card */
+    /* Single Main Content Container Card */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 25px 20px;
@@ -62,15 +65,15 @@ st.markdown(
         margin: 10px auto;
     }}
 
-    /* Title Styling container */
+    /* Title Styling centered inside a single pill box */
     .title-box {{
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
-        padding: 8px 15px;
+        padding: 10px 15px;
         border-radius: 50px;
         text-align: center;
         box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }}
 
     .title-text {{
@@ -119,7 +122,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title inside the single box
+# Single Title Pill Box (centered perfectly with wording inside)
 st.markdown(
     """
     <div class="title-box">
@@ -135,7 +138,7 @@ if df_raw is None:
       ' repository!'
   )
 else:
-  # Using a form allows hitting 'Enter' to submit/search automatically!
+  # Using a form to allow pressing 'Enter' to search
   with st.form(key='search_form'):
     query = st.text_input(
         'Enter Guest Name:', placeholder='Type guest name here...'
