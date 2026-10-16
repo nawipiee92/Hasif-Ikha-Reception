@@ -1,7 +1,8 @@
-import tkinter as tk
-from tkinter import messagebox
-from PIL import Image, ImageTk
+import os
 import pandas as pd
+from PIL import Image, ImageTk
+import tkinter as tk
+import tkinter.messagebox as messagebox
 
 # Load the Excel file
 try:
@@ -47,20 +48,20 @@ def search_name(event=None):
     result_table_label.config(text=f'⭐ Table {table_no} ⭐')
 
 
-# --- UI Setup ---
+# --- UI Setup (Starts in Full Screen / Maximized) ---
 root = tk.Tk()
 root.title('Hasif & Ikha Reception 🌸')
-root.geometry('1024x700')
-root.state('zoomed')  # Full screen / maximized mode
+root.state('zoomed')  # Opens automatically maximized in full screen!
+root.minsize(450, 750)
 
-# --- BACKGROUND IMAGE SETUP ---
+# --- BACKGROUND IMAGE SETUP (Using Border.png) ---
 try:
-  img_path = 'FBorder.png'
+  img_path = 'Border.png'
   original_image = Image.open(img_path)
 except Exception as e:
   original_image = None
   print(
-      'Could not load FBorder.png. Make sure it is in the exact same folder as'
+      'Could not load Border.png. Make sure it is in the exact same folder as'
       ' app.py'
   )
 
@@ -77,6 +78,7 @@ def redraw_background(event):
     width = event.width
     height = event.height
     if width > 10 and height > 10:
+      # Preserves smooth scaling across full screen without distorting aspect ratio
       resized_img = original_image.resize(
           (width, height), Image.Resampling.LANCZOS
       )
@@ -87,16 +89,17 @@ def redraw_background(event):
 canvas.bind('<Configure>', redraw_background)
 
 
-# --- MAIN CONTENT CARD CONTAINER (Placed cleanly on top of the canvas) ---
-card_frame = tk.Frame(root, bg='#ffffff', bd=0)
-# We use canvas.create_window so the white card stays securely on top of the background image
+# --- MAIN CONTENT CARD CONTAINER (Frosted Translucent See-Through Box) ---
+# '#f5f6f8' gives a subtle, frosted glass/see-through effect over the floral border
+card_bg = '#f5f6f8'
+card_frame = tk.Frame(root, bg=card_bg, bd=0)
 card_window = canvas.create_window(
-    500, 300, window=card_frame, anchor='center', width=680, height=380
+    0, 0, window=card_frame, anchor='center', width=430, height=520
 )
 
 
 def center_card(event):
-  # Automatically keeps the card perfectly centered when the window resizes
+  # Automatically keeps the card perfectly centered whether window is normal or full screen
   canvas.coords(card_window, event.width / 2, event.height / 2)
 
 
@@ -107,25 +110,35 @@ canvas.bind('<Configure>', center_card, add='+')
 title_label = tk.Label(
     card_frame,
     text='✦ Hasif & Ikha Reception ✦',
-    font=('Segoe UI', 16, 'bold'),
-    bg='#ffffff',
+    font=('Ink Free', 20, 'bold'),
+    bg=card_bg,
     fg='#4a235a',
 )
-title_label.pack(pady=(15, 8))
+title_label.pack(pady=(18, 2))
+
+# --- DOUBLE UNDERLINE EFFECT ---
+underline_label = tk.Label(
+    card_frame,
+    text='══════════════════',
+    font=('Segoe UI', 9, 'bold'),
+    bg=card_bg,
+    fg='#4a235a',
+)
+underline_label.pack(pady=(0, 15))
 
 # --- SEARCH INPUT AREA ---
-search_sub_frame = tk.Frame(card_frame, bg='#ffffff')
+search_sub_frame = tk.Frame(card_frame, bg=card_bg)
 search_sub_frame.pack(pady=4)
 
 entry = tk.Entry(
     search_sub_frame,
-    width=30,
-    font=('Segoe UI', 12),
+    width=26,
+    font=('Segoe UI', 11),
     relief='solid',
     bd=1,
     justify='center',
 )
-entry.pack(ipady=3, pady=(0, 4))
+entry.pack(ipady=4, pady=(0, 6))
 entry.bind('<Return>', search_name)
 
 search_btn = tk.Button(
@@ -136,36 +149,41 @@ search_btn = tk.Button(
     bg='#6c3483',
     fg='white',
     relief='flat',
-    padx=14,
-    pady=4,
+    padx=16,
+    pady=5,
     cursor='hand2',
 )
 search_btn.pack()
 
 # --- RESULT SECTION ---
 welcome_label = tk.Label(
-    card_frame, text='', font=('Segoe UI', 10, 'bold'), bg='#ffffff', fg='#7f8c8d'
+    card_frame, text='', font=('Segoe UI', 10, 'bold'), bg=card_bg, fg='#7f8c8d'
 )
 welcome_label.pack(pady=(10, 0))
 
+# Guest name uses Century Gothic
 guest_name_label = tk.Label(
     card_frame,
     text='',
-    font=('Segoe UI', 16, 'bold'),
-    bg='#ffffff',
+    font=('Century Gothic', 16, 'bold'),
+    bg=card_bg,
     fg='#1a1a2e',
-    wraplength=620,
+    wraplength=400,
     justify='center',
 )
-guest_name_label.pack(pady=(2, 2))
+guest_name_label.pack(pady=(4, 2))
 
 message_label = tk.Label(
-    card_frame, text='', font=('Segoe UI', 9), bg='#ffffff', fg='#555555'
+    card_frame, text='', font=('Segoe UI', 9), bg=card_bg, fg='#555555', wraplength=400, justify='center'
 )
 message_label.pack(pady=(0, 6))
 
 result_table_label = tk.Label(
-    card_frame, text='', font=('Segoe UI', 22, 'bold'), bg='#ffffff', fg='#c70039'
+    card_frame,
+    text='',
+    font=('Segoe UI', 24, 'bold'),
+    bg=card_bg,
+    fg='#c70039',
 )
 result_table_label.pack(pady=(4, 0))
 
