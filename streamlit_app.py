@@ -35,13 +35,13 @@ df_raw = load_data()
 st.markdown(
     f"""
     <style>
-    /* Hide Streamlit default headers and pull layout up to remove top whitespace */
+    /* Remove default Streamlit top header whitespace */
     header, [data-testid="stHeader"] {{
         display: none !important;
         height: 0px !important;
     }}
     .block-container {{
-        padding-top: 0.5rem !important;
+        padding-top: 0.2rem !important;
         padding-bottom: 2rem !important;
     }}
 
@@ -53,30 +53,30 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card - Perfectly fits mobile and desktop */
+    /* Main Content Container Card - Pushed up higher */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 20px 15px;
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 10px auto;
+        margin: 0 auto;
     }}
 
-    /* Title Styling container */
+    /* Larger White Pill Title Box */
     .title-box {{
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
-        padding: 10px 15px;
+        padding: 14px 20px;
         border-radius: 50px;
         text-align: center;
-        box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
-        margin-bottom: 15px;
+        box-shadow: 0px 3px 12px rgba(0,0,0,0.08);
+        margin-bottom: 18px;
     }}
 
     .title-text {{
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 20px;
+        font-size: 24px;
         font-weight: bold;
         color: #4a235a;
         margin: 0;
@@ -113,10 +113,20 @@ st.markdown(
         margin-top: 10px;
     }}
 
+    /* Smaller images side-by-side optimization */
+    .stImage img {{
+        border-radius: 12px;
+        max-height: 180px;
+        object-fit: cover;
+    }}
+
     @media (max-width: 480px) {{
         .main-card {{
             padding: 15px 10px;
             border-radius: 15px;
+        }}
+        .title-text {{
+            font-size: 20px;
         }}
     }}
     </style>
@@ -127,7 +137,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title neatly inside a single clean container box
+# Larger Title Box pulled up to the top
 st.markdown(
     """
     <div class="title-box">
@@ -224,7 +234,7 @@ else:
         )
         st.info('Please check the list above for the correct name.')
 
-  # --- SMALL SIDE-BY-SIDE IMAGES SECTION ---
+  # --- SMALLER SIDE-BY-SIDE IMAGES SECTION ---
   st.write('')
   col1, col2 = st.columns(2)
   with col1:
