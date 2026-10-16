@@ -17,45 +17,49 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS: NO WHITE CARD, FULLY CENTERED DESIGN ---
+# --- CUSTOM CSS: MOBILE-OPTIMIZED FULL BORDER & CENTERED TEXT ---
 st.markdown(
     """
     <style>
-    /* Force full-screen floral background */
+    /* Force full-screen background that stretches to fit mobile and desktop screens perfectly */
     .stApp {
         background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/FBorder.png");
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed;
     }
     
-    /* Hide Streamlit elements */
+    /* Hide Streamlit header/footer elements */
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Center everything cleanly on the page with no boxes */
+    /* Responsive layout padding to keep everything neatly inside the frame on mobile */
     .block-container {
-        padding-top: 8rem;
-        max-width: 650px;
+        padding-top: 15vh;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 600px;
         text-align: center;
     }
     
-    /* Center Streamlit text inputs and elements */
+    /* Center search bar nicely with subtle background */
     .stTextInput {
         text-align: center;
         margin: 0 auto;
     }
     
     div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
         text-align: center;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* Custom Text Styling */
+    /* Custom Centered Text Styling */
     .title-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 26px;
+        font-size: clamp(20px, 5vw, 26px);
         font-weight: bold;
         color: #4a235a;
         margin-bottom: 20px;
@@ -64,7 +68,7 @@ st.markdown(
     
     .welcome-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 16px;
+        font-size: clamp(14px, 4vw, 16px);
         font-weight: bold;
         color: #7f8c8d;
         margin-top: 25px;
@@ -74,7 +78,7 @@ st.markdown(
     
     .guest-name {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 26px;
+        font-size: clamp(22px, 6vw, 28px);
         font-weight: bold;
         color: #1a1a2e;
         margin: 10px 0;
@@ -83,7 +87,7 @@ st.markdown(
     
     .msg-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
+        font-size: clamp(12px, 3.5vw, 14px);
         color: #555555;
         margin-bottom: 15px;
         text-align: center;
@@ -91,7 +95,7 @@ st.markdown(
     
     .table-badge {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 32px;
+        font-size: clamp(26px, 7vw, 34px);
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
@@ -102,7 +106,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT (Directly on background, no card box) ---
+# --- APP LAYOUT ---
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -114,7 +118,7 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box centered on screen
+  # Search input box centered on mobile/desktop
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
