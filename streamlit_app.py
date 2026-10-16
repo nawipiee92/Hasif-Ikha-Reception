@@ -35,7 +35,7 @@ df_raw = load_data()
 st.markdown(
     f"""
     <style>
-    /* Remove default Streamlit top header whitespace and push everything up */
+    /* Remove default Streamlit top header whitespace and pull everything right to the top */
     header, [data-testid="stHeader"] {{
         display: none !important;
         height: 0px !important;
@@ -43,7 +43,7 @@ st.markdown(
     .block-container {{
         padding-top: 0rem !important;
         padding-bottom: 2rem !important;
-        margin-top: -10px !important;
+        margin-top: -20px !important;
     }}
 
     .stApp {{
@@ -54,7 +54,7 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card - Pushed to the very top */
+    /* Main Content Container Card */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 20px 15px;
@@ -64,20 +64,20 @@ st.markdown(
         margin: 0 auto;
     }}
 
-    /* Prominent Title Box */
+    /* Larger & Prominent Title Box brought further up */
     .title-box {{
         background-color: #ffffff;
-        border: 1px solid #e0e0e0;
-        padding: 14px 20px;
+        border: 1.5px solid #e0e0e0;
+        padding: 16px 20px;
         border-radius: 50px;
         text-align: center;
-        box-shadow: 0px 3px 12px rgba(0,0,0,0.08);
+        box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
         margin-bottom: 18px;
     }}
 
     .title-text {{
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 24px;
+        font-size: 27px;
         font-weight: bold;
         color: #4a235a;
         margin: 0;
@@ -114,7 +114,7 @@ st.markdown(
         margin-top: 10px;
     }}
 
-    /* Ensure images display in full without cropping */
+    /* Full side-by-side images without cropping */
     .stImage img {{
         border-radius: 12px;
         object-fit: contain !important;
@@ -128,7 +128,7 @@ st.markdown(
             border-radius: 15px;
         }}
         .title-text {{
-            font-size: 20px;
+            font-size: 23px;
         }}
     }}
     </style>
@@ -139,7 +139,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title Box placed right at the top
+# Larger Title Box brought up
 st.markdown(
     """
     <div class="title-box">
@@ -236,7 +236,7 @@ else:
         )
         st.info('Please check the list above for the correct name.')
 
-  # --- SIDE-BY-SIDE UN-CROPPED IMAGES SECTION ---
+  # --- SIDE-BY-SIDE FULL IMAGES SECTION ---
   st.write('')
   col1, col2 = st.columns(2)
   with col1:
