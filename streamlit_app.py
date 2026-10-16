@@ -31,20 +31,17 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING (Aggressive removal of top empty blocks) ---
+# --- CUSTOM CSS STYLING (Mobile optimized & clean header layout) ---
 st.markdown(
     f"""
     <style>
-    /* Completely hide Streamlit headers, top decorations, and default toolbars */
-    header, [data-testid="stHeader"], [data-testid="stToolbar"], #MainMenu, footer {{
+    /* Remove default Streamlit top header whitespace */
+    header, [data-testid="stHeader"] {{
         display: none !important;
-        visibility: hidden !important;
         height: 0px !important;
     }}
-    
     .block-container {{
-        padding-top: 0rem !important;
-        margin-top: -30px !important;
+        padding-top: 1rem !important;
         padding-bottom: 2rem !important;
     }}
 
@@ -56,17 +53,17 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card */
+    /* Main Content Container Card - perfectly centered and mobile friendly */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
-        padding: 25px 20px;
+        padding: 20px 15px;
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 10px auto;
+        margin: 0 auto;
     }}
 
-    /* Title Styling container */
+    /* Single Clean Title Box */
     .title-box {{
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
@@ -79,7 +76,7 @@ st.markdown(
 
     .title-text {{
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: bold;
         color: #4a235a;
         margin: 0;
@@ -91,29 +88,40 @@ st.markdown(
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 20px;
+        margin-top: 15px;
     }}
     .guest-name {{
         text-align: center;
         font-family: 'Century Gothic', sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         color: #1a1a2e;
-        margin-top: 8px;
+        margin-top: 6px;
         word-break: break-word;
     }}
     .message-text {{
         text-align: center;
-        font-size: 13px;
+        font-size: 12px;
         color: #555555;
-        margin-top: 8px;
+        margin-top: 6px;
     }}
     .table-text {{
         text-align: center;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         color: #c70039;
-        margin-top: 12px;
+        margin-top: 10px;
+    }}
+
+    /* Extra responsive styling for small mobile screens */
+    @media (max-width: 480px) {{
+        .main-card {{
+            padding: 15px 10px;
+            border-radius: 15px;
+        }}
+        .title-text {{
+            font-size: 18px;
+        }}
     }}
     </style>
     """,
@@ -123,7 +131,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title inside the single box
+# Title neatly inside a single clean container box
 st.markdown(
     """
     <div class="title-box">
@@ -139,7 +147,7 @@ if df_raw is None:
       ' repository!'
   )
 else:
-  # Using a form to allow pressing 'Enter' to search
+  # Form allowing search via pressing Enter or clicking button
   with st.form(key='search_form'):
     query = st.text_input(
         'Enter Guest Name:', placeholder='Type guest name here...'
@@ -188,47 +196,4 @@ else:
         )
         st.info('Please check the spelling and try again.')
       elif len(matches) == 1:
-        st.markdown(
-            '<div class="welcome-text">— W E L C O M E —</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f'<div class="guest-name">{matches[0]["guest"]}</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            '<div class="message-text">We are overjoyed to celebrate our'
-            ' special day with you! 💕</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f'<div class="table-text">⭐ {matches[0]["table"]} ⭐</div>',
-            unsafe_allow_html=True,
-        )
-      else:
-        st.markdown(
-            '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
-            unsafe_allow_html=True,
-        )
-        results_list = '<br>'.join(
-            [f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches]
-        )
-        st.markdown(
-            f'<div style="text-align: center; color: #1a1a2e;'
-            f' font-size:15px; margin-top: 10px;">{results_list}</div>',
-            unsafe_allow_html=True,
-        )
-        st.info('Please check the list above for the correct name.')
-
-  # --- SMALL SIDE-BY-SIDE IMAGES SECTION ---
-  st.write('')
-  col1, col2 = st.columns(2)
-  with col1:
-    if os.path.exists('123.png'):
-      st.image('123.png', use_container_width=True)
-  with col2:
-    if os.path.exists('234.png'):
-      st.image('234.png', use_container_width=True)
-
-# --- END OF MAIN WHITE CARD BOX ---
-st.markdown('</div>', unsafe_allow_html=True)
+        st.
