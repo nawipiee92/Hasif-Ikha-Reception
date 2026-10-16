@@ -21,7 +21,7 @@ df = load_data()
 st.markdown(
     """
     <style>
-    /* Import Ink Free font */
+    /* Import Ink Free & Century Gothic fonts */
     @import url('https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap');
 
     /* Portrait mobile wallpaper scaling for Border.png */
@@ -37,21 +37,12 @@ st.markdown(
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Center container layout */
+    /* Center container layout optimized for phone/mobile width */
     .block-container {
-        padding-top: 15vh;
+        padding-top: 18vh;
         padding-left: 1rem;
         padding-right: 1rem;
-        max-width: 500px;
-        text-align: center;
-    }
-    
-    /* Frosted see-through glass card box */
-    .card-box {
-        background-color: rgba(245, 246, 248, 0.90);
-        padding: 30px 20px;
-        border-radius: 16px;
-        box-shadow: 0px 8px 25px rgba(0,0,0,0.15);
+        max-width: 400px;
         text-align: center;
     }
     
@@ -62,19 +53,19 @@ st.markdown(
     }
     
     div[data-baseweb="input"] {
-        background-color: #ffffff;
-        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.90);
+        border-radius: 12px;
         text-align: center;
-        box-shadow: inset 0px 2px 4px rgba(0,0,0,0.06);
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.10);
     }
 
     /* Title Header */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: clamp(24px, 6vw, 32px);
+        font-size: clamp(24px, 6vw, 30px);
         font-weight: bold;
         color: #4a235a;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
         text-align: center;
     }
     
@@ -82,16 +73,16 @@ st.markdown(
         color: #4a235a;
         font-weight: bold;
         letter-spacing: 2px;
-        margin-bottom: 20px;
-        font-size: 14px;
+        margin-bottom: 25px;
+        font-size: 13px;
     }
     
     .welcome-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: bold;
         color: #7f8c8d;
-        margin-top: 20px;
+        margin-top: 25px;
         letter-spacing: 1.5px;
         text-align: center;
     }
@@ -99,7 +90,7 @@ st.markdown(
     /* Guest name using Century Gothic */
     .guest-name {
         font-family: 'Century Gothic', sans-serif;
-        font-size: clamp(22px, 6vw, 28px);
+        font-size: clamp(22px, 6vw, 27px);
         font-weight: bold;
         color: #1a1a2e;
         margin: 10px 0;
@@ -127,9 +118,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP CONTAINER ---
-st.markdown('<div class="card-box">', unsafe_allow_html=True)
-
+# --- APP LAYOUT (Box container removed for clean floating look) ---
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -186,5 +175,3 @@ else:
           f'<div class="table-badge">⭐ Table {table_no} ⭐</div>',
           unsafe_allow_html=True,
       )
-
-st.markdown('</div>', unsafe_allow_html=True)
