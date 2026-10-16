@@ -17,11 +17,11 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS MATCHING YOUR EXACT DESKTOP APP DESIGN ---
+# --- CUSTOM CSS FOR PERFECT CENTERED WHITE CARD & FLORAL BACKGROUND ---
 st.markdown(
     """
     <style>
-    /* Force full-screen floral background using direct GitHub raw image link */
+    /* Force full-screen floral background */
     .stApp {
         background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/FBorder.png");
         background-size: cover;
@@ -29,21 +29,21 @@ st.markdown(
         background-repeat: no-repeat;
     }
     
-    /* Hide Streamlit header/footer elements */
+    /* Hide Streamlit elements */
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Adjust spacing at the top to center the card nicely */
+    /* Center container padding */
     .block-container {
-        padding-top: 4rem;
-        max-width: 750px;
+        padding-top: 5rem;
+        max-width: 720px;
     }
 
-    /* Single Clean White Cloud Card Container */
+    /* Single Unified Solid White Card Container */
     .cloud-card {
         background-color: #ffffff;
         padding: 45px 35px;
-        border-radius: 35px;
+        border-radius: 40px;
         box-shadow: 0px 15px 35px rgba(0,0,0,0.25);
         text-align: center;
         margin: auto;
@@ -54,7 +54,7 @@ st.markdown(
         font-size: 24px;
         font-weight: bold;
         color: #4a235a;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
     
     .welcome-text {
@@ -62,7 +62,7 @@ st.markdown(
         font-size: 15px;
         font-weight: bold;
         color: #7f8c8d;
-        margin-top: 20px;
+        margin-top: 25px;
         letter-spacing: 1px;
     }
     
@@ -93,7 +93,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT ---
+# --- APP LAYOUT WRAPPED IN THE CARD ---
 st.markdown('<div class="cloud-card">', unsafe_allow_html=True)
 
 st.markdown(
@@ -107,7 +107,7 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box neatly inside the cloud card
+  # Search input box neatly centered inside the main card
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
