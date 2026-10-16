@@ -17,7 +17,7 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS FOR STYLING & BORDER.PNG ---
+# --- CUSTOM CSS FOR STYLING & TEXT OUTLINES ---
 st.markdown(
     """
     <style>
@@ -53,13 +53,13 @@ st.markdown(
     }
     
     div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.90);
+        background-color: rgba(255, 255, 255, 0.92);
         border-radius: 12px;
         text-align: center;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.10);
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
     }
 
-    /* Title Header styling with balanced left/right sparkles */
+    /* Title Header styling with soft dark outline for phone readability */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
         font-size: clamp(23px, 5.5vw, 29px);
@@ -68,6 +68,7 @@ st.markdown(
         margin-bottom: 2px;
         text-align: center;
         white-space: nowrap;
+        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 4px rgba(0,0,0,0.25);
     }
     
     /* Clean professional double underline HTML element */
@@ -77,19 +78,21 @@ st.markdown(
         height: 3px;
         width: 75%;
         margin: 8px auto 25px auto;
+        box-shadow: 0px 1px 2px rgba(255,255,255,0.8);
     }
     
     .welcome-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 13px;
         font-weight: bold;
-        color: #7f8c8d;
+        color: #2c3e50;
         margin-top: 25px;
         letter-spacing: 1.5px;
         text-align: center;
+        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
     }
     
-    /* Guest name using Century Gothic */
+    /* Guest name using Century Gothic with outline */
     .guest-name {
         font-family: 'Century Gothic', sans-serif;
         font-size: clamp(22px, 6vw, 27px);
@@ -97,14 +100,17 @@ st.markdown(
         color: #1a1a2e;
         margin: 10px 0;
         text-align: center;
+        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 4px rgba(0,0,0,0.20);
     }
     
     .msg-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 13px;
-        color: #555555;
+        color: #333333;
+        font-weight: 600;
         margin-bottom: 12px;
         text-align: center;
+        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
     }
     
     .table-badge {
@@ -114,6 +120,7 @@ st.markdown(
         color: #c70039;
         margin-top: 15px;
         text-align: center;
+        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 6px rgba(0,0,0,0.25);
     }
     </style>
 """,
@@ -121,12 +128,10 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
-# Sparkles are now properly positioned on both sides with the title in between
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
 )
-# Replaced text dashes with a sleek CSS double underline
 st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
 
 if df is None:
