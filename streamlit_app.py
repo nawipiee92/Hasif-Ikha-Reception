@@ -139,23 +139,24 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
-# Open a single unified frosted glass card
+# Open the frosted glass card container
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
-# Title and double underline are now safely INSIDE the glass card box
+# Title and double underline inside the card
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
 )
 st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
 
+# Search input box safely contained INSIDE the glass card box
 if df is None:
   st.error(
       '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
       ' repository!'
   )
+  query = ''
 else:
-  # Search input box is also inside the glass card, directly underneath the title
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
@@ -164,7 +165,7 @@ else:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
-if 'query' in locals() and query:
+if query:
   query_clean = query.strip().lower()
   results = df[
       df['Name'].astype(str).str.lower().str.contains(query_clean, na=False)
