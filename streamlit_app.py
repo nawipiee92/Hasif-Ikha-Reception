@@ -31,11 +31,11 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING (Double braces {{ }} used to fix syntax error) ---
+# --- CUSTOM CSS STYLING ---
 st.markdown(
     f"""
     <style>
-    /* Remove default Streamlit top header and whitespace */
+    /* Remove default Streamlit top header and extra whitespace */
     [data-testid="stHeader"] {{
         display: none !important;
     }}
@@ -135,12 +135,15 @@ if df_raw is None:
       ' repository!'
   )
 else:
-  # Search input field
-  query = st.text_input(
-      'Enter Guest Name:', placeholder='Type guest name here...'
-  ).strip().lower()
+  # Using a form allows hitting 'Enter' to submit/search automatically!
+  with st.form(key='search_form'):
+    query = st.text_input(
+        'Enter Guest Name:', placeholder='Type guest name here...'
+    ).strip().lower()
+    
+    submit_button = st.form_submit_button('Find Seating ✨', use_container_width=True)
 
-  if st.button('Find Table ✨', use_container_width=True):
+  if submit_button:
     if not query:
       st.warning('Please enter a name to search.')
     else:
