@@ -50,18 +50,18 @@ st.markdown(
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 20px auto;
+        margin: 25px auto;
     }}
 
-    /* Top White Pill Box holding the Title */
-    .pill-header {{
+    /* Title Styling container */
+    .title-box {{
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
-        padding: 10px 15px;
+        padding: 8px 15px;
         border-radius: 50px;
         text-align: center;
-        box-shadow: 0px 2px 8px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+        margin-bottom: 15px;
     }}
 
     .title-text {{
@@ -78,7 +78,7 @@ st.markdown(
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 15px;
+        margin-top: 20px;
     }}
     .guest-name {{
         text-align: center;
@@ -102,12 +102,6 @@ st.markdown(
         color: #c70039;
         margin-top: 12px;
     }}
-    
-    /* Image styling to keep them small and neat side-by-side */
-    .side-img {{
-        border-radius: 12px;
-        object-fit: cover;
-    }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -116,10 +110,10 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title INSIDE the top white pill box shape
+# Title inside the single box (The empty top box is completely gone!)
 st.markdown(
     """
-    <div class="pill-header">
+    <div class="title-box">
         <div class="title-text">✦ Hasif & Ikha Reception ✦</div>
     </div>
     """,
