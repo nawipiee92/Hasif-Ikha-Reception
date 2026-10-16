@@ -37,7 +37,7 @@ st.markdown(
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Adjusted padding-top (increased to 26vh) to move the title lower and align properly */
+    /* Container alignment and phone-compatible width */
     .block-container {
         padding-top: 26vh;
         padding-left: 1.2rem;
@@ -59,7 +59,7 @@ st.markdown(
         box-shadow: 0px 4px 15px rgba(0,0,0,0.10);
     }
 
-    /* Title Header */
+    /* Title Header with integrated sparkles */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
         font-size: clamp(24px, 6vw, 30px);
@@ -119,6 +119,7 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
+# Combined the sparkles nicely inside the title line so it flows correctly
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
