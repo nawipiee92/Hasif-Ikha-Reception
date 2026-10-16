@@ -52,19 +52,22 @@ st.markdown(
         backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.8);
         border-radius: 20px 20px 0px 0px;
-        padding: 25px 20px 10px 20px;
+        padding: 22px 15px 8px 15px;
         box-shadow: 0px -5px 20px rgba(74, 35, 90, 0.10);
         text-align: center;
     }
 
-    /* Title Header styling */
+    /* Title Header styling - forced to single line with responsive sizing */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: clamp(24px, 5.5vw, 30px);
+        font-size: clamp(20px, 4.8vw, 26px);
         font-weight: bold;
         color: #4a235a;
         margin-bottom: 2px;
         text-align: center;
+        white-space: nowrap;
+        display: block;
+        width: 100%;
     }
     
     /* Clean professional double underline */
@@ -73,7 +76,7 @@ st.markdown(
         border-bottom: 1px solid #4a235a;
         height: 3px;
         width: 75%;
-        margin: 8px auto 15px auto;
+        margin: 6px auto 12px auto;
     }
 
     /* Make the search input wrapper blend seamlessly underneath the title card */
