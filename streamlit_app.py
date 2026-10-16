@@ -31,7 +31,7 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING (Double braces {{ }} used to prevent f-string syntax errors) ---
+# --- CUSTOM CSS STYLING FOR MOBILE RESPONSIVENESS & CARD WRAPPER ---
 st.markdown(
     f"""
     <style>
@@ -43,30 +43,30 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card */
+    /* Center Card Container */
     .main-card {{
-        background-color: rgba(245, 246, 248, 0.95);
-        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 25px 20px;
         border-radius: 20px;
-        box-shadow: 0px 4px 20px rgba(0,0,0,0.15);
-        max-width: 500px;
-        margin: auto;
+        box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
+        max-width: 480px;
+        margin: 20px auto;
     }}
 
     .title-text {{
         text-align: center;
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 26px;
+        font-size: 24px;
         font-weight: bold;
         color: #4a235a;
     }}
     .welcome-text {{
         text-align: center;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 25px;
+        margin-top: 20px;
     }}
     .guest-name {{
         text-align: center;
@@ -74,29 +74,42 @@ st.markdown(
         font-size: 20px;
         font-weight: bold;
         color: #1a1a2e;
-        margin-top: 10px;
+        margin-top: 8px;
+        word-break: break-word;
     }}
     .message-text {{
         text-align: center;
         font-size: 13px;
         color: #555555;
-        margin-top: 10px;
+        margin-top: 8px;
     }}
     .table-text {{
         text-align: center;
         font-size: 20px;
         font-weight: bold;
         color: #c70039;
-        margin-top: 15px;
+        margin-top: 12px;
+    }}
+    
+    /* Mobile optimization for buttons and inputs */
+    @media (max-width: 600px) {{
+        .main-card {{
+            padding: 15px 10px;
+            margin: 10px;
+        }}
+        .title-text {{
+            font-size: 20px;
+        }}
     }}
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# --- APP UI CONTAINER ---
+# --- START OF WHITE BOX CONTAINER ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
+# Title & Divider INSIDE the white box
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -190,7 +203,7 @@ else:
         )
         st.info('Please check the list above for the correct name.')
 
-  # --- IMAGES SECTION ---
+  # --- SIDE-BY-SIDE IMAGES SECTION INSIDE THE BOX ---
   st.write('')
   col1, col2 = st.columns(2)
   with col1:
@@ -200,4 +213,5 @@ else:
     if os.path.exists('234.png'):
       st.image('234.png', use_container_width=True)
 
+# --- END OF WHITE BOX CONTAINER ---
 st.markdown('</div>', unsafe_allow_html=True)
