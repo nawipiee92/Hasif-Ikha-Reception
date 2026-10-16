@@ -46,27 +46,32 @@ st.markdown(
         text-align: center;
     }
     
-    /* Unified Frosted Glass Card Box */
-    .glass-card {
-        background-color: rgba(240, 244, 248, 0.90);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.7);
+    /* Target Streamlit's block container to act as our unified frosted glass box */
+    div.element-container:has(.glass-card-marker) {
+        display: none;
+    }
+
+    /* Custom styled wrapper for the title and input */
+    .unified-card {
+        background-color: rgba(240, 244, 248, 0.92);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
         border-radius: 20px;
-        padding: 25px 20px;
+        padding: 30px 20px 20px 20px;
         box-shadow: 0px 8px 32px rgba(74, 35, 90, 0.15);
         margin-bottom: 25px;
         text-align: center;
     }
     
-    /* Search box styling inside the glass card */
+    /* Search box styling inside the unified card */
     .stTextInput {
         text-align: center;
         margin: 0 auto;
     }
     
     div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.98) !important;
         border-radius: 12px;
         text-align: center;
         box-shadow: inset 0px 2px 4px rgba(0,0,0,0.06);
@@ -138,18 +143,17 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT ---
-# Open the frosted glass card container
-st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+# --- APP LAYOUT WITH UNIFIED FROSTED CONTAINER ---
+st.markdown('<div class="unified-card">', unsafe_allow_html=True)
 
-# Title and double underline inside the card
+# Title & Double Underline placed inside the card
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
 )
 st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
 
-# Search input box safely contained INSIDE the glass card box
+# Search input box placed directly inside the same card box
 if df is None:
   st.error(
       '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
@@ -161,7 +165,6 @@ else:
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
 
-# Close the glass card container
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
