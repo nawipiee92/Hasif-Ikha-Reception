@@ -37,11 +37,11 @@ st.markdown(
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Center container layout optimized for phone/mobile width */
+    /* Adjusted padding-top (increased to 26vh) to move the title lower and align properly */
     .block-container {
-        padding-top: 18vh;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-top: 26vh;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
         max-width: 400px;
         text-align: center;
     }
@@ -118,7 +118,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT (Box container removed for clean floating look) ---
+# --- APP LAYOUT ---
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
