@@ -43,31 +43,42 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Single Clean Central Card Container */
+    /* Main Content Container Card */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 25px 20px;
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 30px auto;
+        margin: 20px auto;
+    }}
+
+    /* Top White Pill Box holding the Title */
+    .pill-header {{
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        padding: 10px 15px;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.06);
+        margin-bottom: 20px;
     }}
 
     .title-text {{
-        text-align: center;
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 24px;
+        font-size: 22px;
         font-weight: bold;
         color: #4a235a;
-        margin-bottom: 5px;
+        margin: 0;
     }}
+    
     .welcome-text {{
         text-align: center;
         font-size: 13px;
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 20px;
+        margin-top: 15px;
     }}
     .guest-name {{
         text-align: center;
@@ -91,6 +102,12 @@ st.markdown(
         color: #c70039;
         margin-top: 12px;
     }}
+    
+    /* Image styling to keep them small and neat side-by-side */
+    .side-img {{
+        border-radius: 12px;
+        object-fit: cover;
+    }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -99,13 +116,13 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title & Divider neatly inside the single card box
+# Title INSIDE the top white pill box shape
 st.markdown(
-    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<div style='text-align: center; color: #4a235a; margin-bottom: 15px;'>══════════════════</div>",
+    """
+    <div class="pill-header">
+        <div class="title-text">✦ Hasif & Ikha Reception ✦</div>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
