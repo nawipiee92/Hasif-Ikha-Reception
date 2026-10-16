@@ -35,14 +35,15 @@ df_raw = load_data()
 st.markdown(
     f"""
     <style>
-    /* Remove default Streamlit top header whitespace */
+    /* Remove default Streamlit top header whitespace and push everything up */
     header, [data-testid="stHeader"] {{
         display: none !important;
         height: 0px !important;
     }}
     .block-container {{
-        padding-top: 0.2rem !important;
+        padding-top: 0rem !important;
         padding-bottom: 2rem !important;
+        margin-top: -10px !important;
     }}
 
     .stApp {{
@@ -53,7 +54,7 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card - Pushed up higher */
+    /* Main Content Container Card - Pushed to the very top */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 20px 15px;
@@ -63,7 +64,7 @@ st.markdown(
         margin: 0 auto;
     }}
 
-    /* Larger White Pill Title Box */
+    /* Prominent Title Box */
     .title-box {{
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
@@ -113,11 +114,12 @@ st.markdown(
         margin-top: 10px;
     }}
 
-    /* Smaller images side-by-side optimization */
+    /* Ensure images display in full without cropping */
     .stImage img {{
         border-radius: 12px;
-        max-height: 180px;
-        object-fit: cover;
+        object-fit: contain !important;
+        width: 100% !important;
+        height: auto !important;
     }}
 
     @media (max-width: 480px) {{
@@ -137,7 +139,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Larger Title Box pulled up to the top
+# Title Box placed right at the top
 st.markdown(
     """
     <div class="title-box">
@@ -234,7 +236,7 @@ else:
         )
         st.info('Please check the list above for the correct name.')
 
-  # --- SMALLER SIDE-BY-SIDE IMAGES SECTION ---
+  # --- SIDE-BY-SIDE UN-CROPPED IMAGES SECTION ---
   st.write('')
   col1, col2 = st.columns(2)
   with col1:
