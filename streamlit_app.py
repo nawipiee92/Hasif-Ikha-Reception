@@ -31,7 +31,7 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING FOR MOBILE RESPONSIVENESS & CARD WRAPPER ---
+# --- CUSTOM CSS STYLING ---
 st.markdown(
     f"""
     <style>
@@ -43,7 +43,7 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Center Card Container */
+    /* Main Content Container Card */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 25px 20px;
@@ -53,20 +53,32 @@ st.markdown(
         margin: 20px auto;
     }}
 
-    .title-text {{
+    /* Top White Pill Box holding the Title */
+    .pill-header {{
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        padding: 10px 15px;
+        border-radius: 50px;
         text-align: center;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.06);
+        margin-bottom: 20px;
+    }}
+
+    .title-text {{
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: 24px;
+        font-size: 22px;
         font-weight: bold;
         color: #4a235a;
+        margin: 0;
     }}
+    
     .welcome-text {{
         text-align: center;
         font-size: 13px;
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
-        margin-top: 20px;
+        margin-top: 15px;
     }}
     .guest-name {{
         text-align: center;
@@ -91,31 +103,26 @@ st.markdown(
         margin-top: 12px;
     }}
     
-    /* Mobile optimization for buttons and inputs */
-    @media (max-width: 600px) {{
-        .main-card {{
-            padding: 15px 10px;
-            margin: 10px;
-        }}
-        .title-text {{
-            font-size: 20px;
-        }}
+    /* Image styling to keep them small and neat side-by-side */
+    .side-img {{
+        border-radius: 12px;
+        object-fit: cover;
     }}
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# --- START OF WHITE BOX CONTAINER ---
+# --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title & Divider INSIDE the white box
+# Title INSIDE the top white pill box shape
 st.markdown(
-    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<div style='text-align: center; color: #4a235a; margin-bottom: 15px;'>══════════════════</div>",
+    """
+    <div class="pill-header">
+        <div class="title-text">✦ Hasif & Ikha Reception ✦</div>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
@@ -203,7 +210,7 @@ else:
         )
         st.info('Please check the list above for the correct name.')
 
-  # --- SIDE-BY-SIDE IMAGES SECTION INSIDE THE BOX ---
+  # --- SMALL SIDE-BY-SIDE IMAGES SECTION ---
   st.write('')
   col1, col2 = st.columns(2)
   with col1:
@@ -213,5 +220,5 @@ else:
     if os.path.exists('234.png'):
       st.image('234.png', use_container_width=True)
 
-# --- END OF WHITE BOX CONTAINER ---
+# --- END OF MAIN WHITE CARD BOX ---
 st.markdown('</div>', unsafe_allow_html=True)
