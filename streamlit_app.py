@@ -17,7 +17,7 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS FOR STYLING & TEXT OUTLINES ---
+# --- CUSTOM CSS FOR FROSTED GLASS CARD & STYLING ---
 st.markdown(
     """
     <style>
@@ -39,11 +39,23 @@ st.markdown(
     
     /* Container alignment and phone-compatible width */
     .block-container {
-        padding-top: 26vh;
+        padding-top: 15vh;
         padding-left: 1.2rem;
         padding-right: 1.2rem;
-        max-width: 400px;
+        max-width: 420px;
         text-align: center;
+    }
+    
+    /* Frosted Blue-White Translucent Glass Box for Title & Search */
+    .glass-card {
+        background-color: rgba(240, 244, 248, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        padding: 25px 20px;
+        box-shadow: 0px 8px 32px rgba(74, 35, 90, 0.12);
+        margin-bottom: 25px;
     }
     
     /* Search bar alignment */
@@ -53,22 +65,21 @@ st.markdown(
     }
     
     div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.92);
+        background-color: rgba(255, 255, 255, 0.95);
         border-radius: 12px;
         text-align: center;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
+        box-shadow: inset 0px 2px 4px rgba(0,0,0,0.06);
     }
 
-    /* Title Header styling with soft dark outline for phone readability */
+    /* Title Header styling */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: clamp(23px, 5.5vw, 29px);
+        font-size: clamp(22px, 5vw, 28px);
         font-weight: bold;
         color: #4a235a;
         margin-bottom: 2px;
         text-align: center;
         white-space: nowrap;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 4px rgba(0,0,0,0.25);
     }
     
     /* Clean professional double underline HTML element */
@@ -76,9 +87,8 @@ st.markdown(
         border-top: 2px solid #4a235a;
         border-bottom: 1px solid #4a235a;
         height: 3px;
-        width: 75%;
-        margin: 8px auto 25px auto;
-        box-shadow: 0px 1px 2px rgba(255,255,255,0.8);
+        width: 70%;
+        margin: 8px auto 18px auto;
     }
     
     .welcome-text {
@@ -86,7 +96,7 @@ st.markdown(
         font-size: 13px;
         font-weight: bold;
         color: #2c3e50;
-        margin-top: 25px;
+        margin-top: 15px;
         letter-spacing: 1.5px;
         text-align: center;
         text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
@@ -106,81 +116,3 @@ st.markdown(
     .msg-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 13px;
-        color: #333333;
-        font-weight: 600;
-        margin-bottom: 12px;
-        text-align: center;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
-    }
-    
-    .table-badge {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: clamp(26px, 7vw, 34px);
-        font-weight: bold;
-        color: #c70039;
-        margin-top: 15px;
-        text-align: center;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 6px rgba(0,0,0,0.25);
-    }
-    </style>
-""",
-    unsafe_allow_html=True,
-)
-
-# --- APP LAYOUT ---
-st.markdown(
-    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
-    unsafe_allow_html=True,
-)
-st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
-
-if df is None:
-  st.error(
-      '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
-      ' repository!'
-  )
-else:
-  # Search input box centered for portrait view
-  query = st.text_input(
-      '', placeholder='Type your name here...', label_visibility='collapsed'
-  )
-
-  if query:
-    query_clean = query.strip().lower()
-    results = df[
-        df['Name'].astype(str).str.lower().str.contains(query_clean, na=False)
-    ]
-
-    if results.empty:
-      st.markdown(
-          '<div class="welcome-text" style="color: #c70039;">❌ Guest not'
-          ' found</div>',
-          unsafe_allow_html=True,
-      )
-      st.markdown(
-          '<div class="msg-text">Please check your spelling and try'
-          ' again.</div>',
-          unsafe_allow_html=True,
-      )
-    else:
-      row = results.iloc[0]
-      guest_name = row['Name']
-      table_no = row['Table No.']
-
-      st.markdown(
-          '<div class="welcome-text">— W E L C O M E —</div>',
-          unsafe_allow_html=True,
-      )
-      st.markdown(
-          f'<div class="guest-name">✨ {guest_name} ✨</div>',
-          unsafe_allow_html=True,
-      )
-      st.markdown(
-          '<div class="msg-text">We are overjoyed to celebrate our special day'
-          ' with you! 💕</div>',
-          unsafe_allow_html=True,
-      )
-      st.markdown(
-          f'<div class="table-badge">⭐ Table {table_no} ⭐</div>',
-          unsafe_allow_html=True,
-      )
