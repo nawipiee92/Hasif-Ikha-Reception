@@ -46,7 +46,7 @@ st.markdown(
         text-align: center;
     }
     
-    /* Frosted Blue-White Translucent Glass Box for Title & Search */
+    /* Frosted Blue-White Translucent Glass Box wrapping the entire top section */
     .glass-card {
         background-color: rgba(240, 244, 248, 0.88);
         backdrop-filter: blur(8px);
@@ -56,9 +56,10 @@ st.markdown(
         padding: 25px 20px;
         box-shadow: 0px 8px 32px rgba(74, 35, 90, 0.15);
         margin-bottom: 25px;
+        text-align: center;
     }
     
-    /* Search bar alignment */
+    /* Search bar alignment inside the card */
     .stTextInput {
         text-align: center;
         margin: 0 auto;
@@ -138,7 +139,9 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
+# Open the frosted glass card container
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -151,10 +154,12 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box centered for portrait view
+  # Search input box nicely enclosed inside the glass card
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
+
+# Close the frosted glass card container properly
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
