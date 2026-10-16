@@ -43,14 +43,14 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Main Content Container Card */
+    /* Single Clean Central Card Container */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 25px 20px;
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 40px auto 20px auto;
+        margin: 30px auto;
     }}
 
     .title-text {{
@@ -99,7 +99,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title & Divider directly inside the main card box (no extra top box)
+# Title & Divider neatly inside the single card box
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
@@ -201,4 +201,7 @@ else:
       st.image('123.png', use_container_width=True)
   with col2:
     if os.path.exists('234.png'):
-      st.
+      st.image('234.png', use_container_width=True)
+
+# --- END OF MAIN WHITE CARD BOX ---
+st.markdown('</div>', unsafe_allow_html=True)
