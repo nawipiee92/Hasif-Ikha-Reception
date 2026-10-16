@@ -31,10 +31,19 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING ---
+# --- CUSTOM CSS STYLING (Hides Streamlit top header and extra boxes) ---
 st.markdown(
     f"""
     <style>
+    /* Remove default Streamlit top header and whitespace */
+    [data-testid="stHeader"] {{
+        display: none !important;
+    }
+    .block-container {{
+        padding-top: 1rem !important;
+        padding-bottom: 2rem !important;
+    }}
+
     .stApp {{
         background-image: url("data:image/png;base64,{bg_base64}");
         background-size: cover;
@@ -50,7 +59,7 @@ st.markdown(
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
         max-width: 480px;
-        margin: 25px auto;
+        margin: 10px auto;
     }}
 
     /* Title Styling container */
@@ -110,7 +119,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Title inside the single box (The empty top box is completely gone!)
+# Title inside the single box
 st.markdown(
     """
     <div class="title-box">
