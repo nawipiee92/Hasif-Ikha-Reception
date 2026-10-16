@@ -31,14 +31,14 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING (Hides Streamlit top header and extra boxes) ---
+# --- CUSTOM CSS STYLING (Double braces {{ }} used to fix syntax error) ---
 st.markdown(
     f"""
     <style>
     /* Remove default Streamlit top header and whitespace */
     [data-testid="stHeader"] {{
         display: none !important;
-    }
+    }}
     .block-container {{
         padding-top: 1rem !important;
         padding-bottom: 2rem !important;
