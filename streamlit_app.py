@@ -17,14 +17,14 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS: MOBILE-OPTIMIZED FULL BORDER & CENTERED TEXT ---
+# --- CUSTOM CSS: PORTRAIT MOBILE-FRIENDLY BACKGROUND ---
 st.markdown(
     """
     <style>
-    /* Force full-screen background that stretches to fit mobile and desktop screens perfectly */
+    /* Portrait mobile wallpaper scaling for the floral border */
     .stApp {
         background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/FBorder.png");
-        background-size: 100% 100%;
+        background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -34,12 +34,12 @@ st.markdown(
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Responsive layout padding to keep everything neatly inside the frame on mobile */
+    /* Perfect vertical centering for portrait mobile screens */
     .block-container {
-        padding-top: 15vh;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        max-width: 600px;
+        padding-top: 18vh;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+        max-width: 550px;
         text-align: center;
     }
     
@@ -53,16 +53,16 @@ st.markdown(
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 12px;
         text-align: center;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
     }
 
     /* Custom Centered Text Styling */
     .title-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: clamp(20px, 5vw, 26px);
+        font-size: clamp(22px, 5.5vw, 28px);
         font-weight: bold;
         color: #4a235a;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         text-align: center;
     }
     
@@ -71,23 +71,23 @@ st.markdown(
         font-size: clamp(14px, 4vw, 16px);
         font-weight: bold;
         color: #7f8c8d;
-        margin-top: 25px;
+        margin-top: 30px;
         letter-spacing: 1px;
         text-align: center;
     }
     
     .guest-name {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: clamp(22px, 6vw, 28px);
+        font-size: clamp(24px, 6.5vw, 30px);
         font-weight: bold;
         color: #1a1a2e;
-        margin: 10px 0;
+        margin: 12px 0;
         text-align: center;
     }
     
     .msg-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: clamp(12px, 3.5vw, 14px);
+        font-size: clamp(13px, 3.8vw, 15px);
         color: #555555;
         margin-bottom: 15px;
         text-align: center;
@@ -95,7 +95,7 @@ st.markdown(
     
     .table-badge {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: clamp(26px, 7vw, 34px);
+        font-size: clamp(28px, 7.5vw, 36px);
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
@@ -118,7 +118,7 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box centered on mobile/desktop
+  # Search input box centered for portrait view
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
