@@ -17,59 +17,58 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS MATCHING YOUR DESKTOP DESIGN ---
+# --- CUSTOM CSS MATCHING YOUR EXACT DESKTOP APP DESIGN ---
 st.markdown(
     """
     <style>
-    /* Force full-screen background using local file matching */
+    /* Force full-screen floral background using direct GitHub raw image link */
     .stApp {
-        background-image: url("app/static/FBorder.png"), url("FBorder.png");
+        background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/FBorder.png");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-color: #d7bde2;
     }
     
-    /* Hide Streamlit elements */
+    /* Hide Streamlit header/footer elements */
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Center container styling */
+    /* Adjust spacing at the top to center the card nicely */
     .block-container {
-        padding-top: 5rem;
-        max-width: 800px;
+        padding-top: 4rem;
+        max-width: 750px;
     }
 
-    /* Solid White Card Container matching your desktop app */
+    /* Single Clean White Cloud Card Container */
     .cloud-card {
         background-color: #ffffff;
-        padding: 50px 40px;
-        border-radius: 20px;
-        box-shadow: 0px 20px 40px rgba(0,0,0,0.25);
+        padding: 45px 35px;
+        border-radius: 35px;
+        box-shadow: 0px 15px 35px rgba(0,0,0,0.25);
         text-align: center;
         margin: auto;
     }
     
     .title-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 26px;
+        font-size: 24px;
         font-weight: bold;
         color: #4a235a;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
     
     .welcome-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
         color: #7f8c8d;
-        margin-top: 25px;
+        margin-top: 20px;
         letter-spacing: 1px;
     }
     
     .guest-name {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 26px;
+        font-size: 24px;
         font-weight: bold;
         color: #1a1a2e;
         margin: 10px 0;
@@ -77,14 +76,14 @@ st.markdown(
     
     .msg-text {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
+        font-size: 13px;
         color: #555555;
         margin-bottom: 15px;
     }
     
     .table-badge {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 32px;
+        font-size: 30px;
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
@@ -108,7 +107,7 @@ if df is None:
       ' repository!'
   )
 else:
-  # Search input box matching your desktop style
+  # Search input box neatly inside the cloud card
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
