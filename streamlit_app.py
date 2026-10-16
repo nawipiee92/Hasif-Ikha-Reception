@@ -17,7 +17,7 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS FOR STYLING & EMBEDDING TITLE ---
+# --- CUSTOM CSS FOR CLEAN CARD CONTAINER ---
 st.markdown(
     """
     <style>
@@ -25,7 +25,7 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap');
 
     /* Portrait mobile wallpaper scaling for Border.png */
-    stApp, .stApp {
+    .stApp {
         background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/Border.png");
         background-size: cover;
         background-position: center;
@@ -46,16 +46,19 @@ st.markdown(
         text-align: center;
     }
     
-    /* Style the main search widget container box to look gorgeous and translucent */
-    div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.92) !important;
-        border-radius: 16px;
+    /* The Unified Translucent White Card Box */
+    .custom-card {
+        background-color: rgba(255, 255, 255, 0.90);
+        backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0px 8px 25px rgba(74, 35, 90, 0.15);
-        padding: 10px;
+        border-radius: 20px;
+        padding: 25px 20px 20px 20px;
+        box-shadow: 0px 8px 30px rgba(74, 35, 90, 0.15);
+        margin-bottom: 25px;
+        text-align: center;
     }
 
-    /* Title Header styling inside or above the box */
+    /* Title Header styling */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
         font-size: clamp(24px, 5.5vw, 30px);
@@ -121,6 +124,16 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
+# Open the custom translucent white card box
+st.markdown('<div class="custom-card">', unsafe_allow_html=True)
+
+# Title and double underline INSIDE the white card box
+st.markdown(
+    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
+    unsafe_allow_html=True,
+)
+st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
+
 if df is None:
   st.error(
       '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
@@ -128,12 +141,13 @@ if df is None:
   )
   query = ''
 else:
-  # Using Streamlit text input label to cleanly host the title inside the box wrapper
+  # Search input box sits nicely right below the title inside the card
   query = st.text_input(
-      '✦ Hasif & Ikha Reception ✦',
-      placeholder='Type your name here...',
-      help='Search guest name',
+      '', placeholder='Type your name here...', label_visibility='collapsed'
   )
+
+# Close the white card box container
+st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
 if query:
