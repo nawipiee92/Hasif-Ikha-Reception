@@ -17,7 +17,7 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS FOR CLEAN CARD CONTAINER ---
+# --- CUSTOM CSS FOR STYLING ---
 st.markdown(
     """
     <style>
@@ -46,15 +46,14 @@ st.markdown(
         text-align: center;
     }
     
-    /* The Unified Translucent White Card Box */
-    .custom-card {
+    /* Custom Title Header Container */
+    .title-card {
         background-color: rgba(255, 255, 255, 0.90);
         backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        padding: 25px 20px 20px 20px;
-        box-shadow: 0px 8px 30px rgba(74, 35, 90, 0.15);
-        margin-bottom: 25px;
+        border-radius: 20px 20px 0px 0px;
+        padding: 25px 20px 10px 20px;
+        box-shadow: 0px -5px 20px rgba(74, 35, 90, 0.10);
         text-align: center;
     }
 
@@ -74,7 +73,18 @@ st.markdown(
         border-bottom: 1px solid #4a235a;
         height: 3px;
         width: 75%;
-        margin: 8px auto 20px auto;
+        margin: 8px auto 15px auto;
+    }
+
+    /* Make the search input wrapper blend seamlessly underneath the title card */
+    div[data-baseweb="input"] {
+        background-color: rgba(255, 255, 255, 0.90) !important;
+        border-top: none !important;
+        border-radius: 0px 0px 20px 20px !important;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 8px 25px rgba(74, 35, 90, 0.15);
+        padding: 5px 15px 15px 15px !important;
+        margin-top: -10px;
     }
     
     .welcome-text {
@@ -124,15 +134,16 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
-# Open the custom translucent white card box
-st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-
-# Title and double underline INSIDE the white card box
+# Render title and double underline inside a dedicated header card
 st.markdown(
-    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
+    """
+    <div class="title-card">
+        <div class="title-text">✦ Hasif & Ikha Reception ✦</div>
+        <div class="double-underline"></div>
+    </div>
+""",
     unsafe_allow_html=True,
 )
-st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
 
 if df is None:
   st.error(
@@ -141,13 +152,10 @@ if df is None:
   )
   query = ''
 else:
-  # Search input box sits nicely right below the title inside the card
+  # Search input box immediately follows, styled to form the bottom half of the card
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
-
-# Close the white card box container
-st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
 if query:
