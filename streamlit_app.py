@@ -31,19 +31,20 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING ---
+# --- CUSTOM CSS STYLING (Aggressive removal of top empty blocks) ---
 st.markdown(
     f"""
     <style>
-    /* Completely remove Streamlit top header and extra containers */
-    [data-testid="stHeader"] {{
+    /* Completely hide Streamlit headers, top decorations, and default toolbars */
+    header, [data-testid="stHeader"], [data-testid="stToolbar"], #MainMenu, footer {{
         display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
     }}
-    [data-testid="stToolbar"] {{
-        display: none !important;
-    }}
+    
     .block-container {{
-        padding-top: 0.5rem !important;
+        padding-top: 0rem !important;
+        margin-top: -30px !important;
         padding-bottom: 2rem !important;
     }}
 
@@ -55,7 +56,7 @@ st.markdown(
         background-attachment: fixed;
     }}
     
-    /* Single Main Content Container Card */
+    /* Main Content Container Card */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 25px 20px;
@@ -65,7 +66,7 @@ st.markdown(
         margin: 10px auto;
     }}
 
-    /* Title Styling centered inside a single pill box */
+    /* Title Styling container */
     .title-box {{
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
@@ -73,7 +74,7 @@ st.markdown(
         border-radius: 50px;
         text-align: center;
         box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }}
 
     .title-text {{
@@ -122,7 +123,7 @@ st.markdown(
 # --- START OF MAIN WHITE CARD BOX ---
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Single Title Pill Box (centered perfectly with wording inside)
+# Title inside the single box
 st.markdown(
     """
     <div class="title-box">
