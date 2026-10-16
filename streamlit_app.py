@@ -17,10 +17,11 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM DESIGN & BACKGROUND STYLING ---
+# --- CUSTOM CSS MATCHING YOUR PYTHON APP ---
 st.markdown(
     """
     <style>
+    /* Full-screen background */
     .stApp {
         background-image: url("FBorder.png");
         background-size: cover;
@@ -28,52 +29,56 @@ st.markdown(
         background-repeat: no-repeat;
     }
     
-    /* Cloud Card Container styling */
+    /* Hide Streamlit default header/footer for a clean app look */
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+
+    /* Perfect White Cloud Card Container matching Python app */
     .cloud-card {
-        background-color: rgba(255, 255, 255, 0.95);
-        padding: 35px 25px;
-        border-radius: 40px;
-        box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+        background-color: #ffffff;
+        padding: 40px 30px;
+        border-radius: 45px;
+        box-shadow: 0px 15px 35px rgba(0,0,0,0.2);
         text-align: center;
-        max-width: 600px;
-        margin: 40px auto;
+        max-width: 680px;
+        margin: 50px auto;
     }
     
     .title-text {
-        font-family: 'Segoe UI', sans-serif;
-        font-size: 22px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 24px;
         font-weight: bold;
         color: #4a235a;
         margin-bottom: 20px;
     }
     
     .welcome-text {
-        font-family: 'Segoe UI', sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 15px;
         font-weight: bold;
         color: #7f8c8d;
-        margin-top: 20px;
-        letter-spacing: 2px;
+        margin-top: 25px;
+        letter-spacing: 1px;
     }
     
     .guest-name {
-        font-family: 'Segoe UI', sans-serif;
-        font-size: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 24px;
         font-weight: bold;
         color: #1a1a2e;
-        margin: 12px 0;
+        margin: 10px 0;
     }
     
     .msg-text {
-        font-family: 'Segoe UI', sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 13px;
         color: #555555;
         margin-bottom: 15px;
     }
     
     .table-badge {
-        font-family: 'Segoe UI', sans-serif;
-        font-size: 26px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 30px;
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
@@ -83,7 +88,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT & INTERACTIVE SEARCH ---
+# --- APP LAYOUT ---
 st.markdown('<div class="cloud-card">', unsafe_allow_html=True)
 
 st.markdown(
@@ -93,11 +98,11 @@ st.markdown(
 
 if df is None:
   st.error(
-      '⚠️ Could not find "names.xlsx". Make sure it is uploaded alongside your'
-      ' app!'
+      '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
+      ' repository!'
   )
 else:
-  # Search input box for guests to type their name
+  # Search input box matching your Python app field
   query = st.text_input(
       '', placeholder='Type your name here...', label_visibility='collapsed'
   )
