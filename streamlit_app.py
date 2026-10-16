@@ -1,228 +1,264 @@
 import os
 import pandas as pd
-import streamlit as st
+from PIL import Image, ImageOps, ImageTk
+import tkinter as tk
+import tkinter.messagebox as messagebox
 
-# --- PAGE CONFIGURATION ---
-st.set_page_config(
-    page_title='Hasif & Ikha Reception 🌸', page_icon='🌸', layout='centered'
-)
-
-# --- LOAD EXCEL FILE ---
-@st.cache_data
-def load_data():
-  if os.path.exists('names.xlsx'):
-    return pd.read_excel('names.xlsx')
-  return None
-
-
-df = load_data()
-
-# --- CUSTOM CSS FOR STYLING ---
-st.markdown(
-    """
-    <style>
-    /* Import Ink Free & Century Gothic fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap');
-
-    /* Portrait mobile wallpaper scaling for Border.png */
-    .stApp {
-        background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/Border.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-    
-    /* Hide Streamlit header/footer elements */
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
-    
-    /* Container alignment and phone-compatible width */
-    .block-container {
-        padding-top: 15vh;
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
-        max-width: 420px;
-        text-align: center;
-    }
-    
-    /* Custom Title Header Container */
-    .title-card {
-        background-color: rgba(255, 255, 255, 0.90);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 20px 20px 0px 0px;
-        padding: 22px 15px 8px 15px;
-        box-shadow: 0px -5px 20px rgba(74, 35, 90, 0.10);
-        text-align: center;
-    }
-
-    /* Title Header styling - forced to single line with responsive sizing */
-    .title-text {
-        font-family: 'Ink Free', cursive, sans-serif;
-        font-size: clamp(20px, 4.8vw, 26px);
-        font-weight: bold;
-        color: #4a235a;
-        margin-bottom: 2px;
-        text-align: center;
-        white-space: nowrap;
-        display: block;
-        width: 100%;
-    }
-    
-    /* Clean professional double underline */
-    .double-underline {
-        border-top: 2px solid #4a235a;
-        border-bottom: 1px solid #4a235a;
-        height: 3px;
-        width: 75%;
-        margin: 6px auto 12px auto;
-    }
-
-    /* Make the search input wrapper blend seamlessly underneath the title card */
-    div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.90) !important;
-        border-top: none !important;
-        border-radius: 0px 0px 20px 20px !important;
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0px 8px 25px rgba(74, 35, 90, 0.15);
-        padding: 5px 15px 15px 15px !important;
-        margin-top: -10px;
-    }
-    
-    .welcome-text {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 13px;
-        font-weight: bold;
-        color: #2c3e50;
-        margin-top: 20px;
-        letter-spacing: 1.5px;
-        text-align: center;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
-    }
-    
-    /* Guest name using Century Gothic with outline */
-    .guest-name {
-        font-family: 'Century Gothic', sans-serif;
-        font-size: clamp(22px, 6vw, 27px);
-        font-weight: bold;
-        color: #1a1a2e;
-        margin: 8px 0;
-        text-align: center;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 4px rgba(0,0,0,0.20);
-    }
-    
-    .msg-text {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 13px;
-        color: #333333;
-        font-weight: 600;
-        margin-bottom: 10px;
-        text-align: center;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
-    }
-    
-    .table-badge {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: clamp(26px, 7vw, 34px);
-        font-weight: bold;
-        color: #c70039;
-        margin-top: 10px;
-        text-align: center;
-        text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0px 2px 6px rgba(0,0,0,0.25);
-    }
-
-    /* Beautiful rounded styling for the bottom images */
-    .bottom-images-container {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 25px;
-        margin-bottom: 20px;
-    }
-    
-    .bottom-images-container img {
-        width: 46%;
-        max-height: 160px;
-        object-fit: cover;
-        border-radius: 18px;
-        border: 2px solid rgba(255, 255, 255, 0.9);
-        box-shadow: 0px 6px 20px rgba(74, 35, 90, 0.20);
-    }
-    </style>
-""",
-    unsafe_allow_html=True,
-)
-
-# --- APP LAYOUT ---
-st.markdown(
-    """
-    <div class="title-card">
-        <div class="title-text">✦ Hasif & Ikha Reception ✦</div>
-        <div class="double-underline"></div>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
-
-if df is None:
-  st.error(
-      '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
-      ' repository!'
+# Load the Excel file safely
+try:
+  df_raw = pd.read_excel('names.xlsx', header=None)
+except Exception as e:
+  messagebox.showerror(
+      'Error',
+      'Could not find "names.xlsx". Make sure it is in the same folder!',
   )
-  query = ''
-else:
-  query = st.text_input(
-      '', placeholder='Type your name here...', label_visibility='collapsed'
+  exit()
+
+
+def search_name(event=None):
+  try:
+    query = entry.get().strip().lower()
+    if not query:
+      messagebox.showwarning('Warning', 'Please enter a name to search.')
+      return
+
+    matches = []
+    current_table = 'TABLE VIP Z1'
+
+    # Scan through the Excel rows to find ALL matching guests
+    for index, row in df_raw.iterrows():
+      row_str_values = [str(val).strip() for val in row.values if pd.notna(val)]
+      
+      # Update table header if found
+      for val in row_str_values:
+        if 'table' in val.lower():
+          current_table = val
+          break
+          
+      # Check cells for matching guest name
+      for col_idx, val in enumerate(row.values):
+        if pd.notna(val):
+          cell_text = str(val).strip()
+          # If query matches and it's not a header/number
+          if query in cell_text.lower() and 'table' not in cell_text.lower() and cell_text.lower() != 'no':
+            # Avoid duplicate entries of the exact same name in the same table
+            if not any(m['guest'] == cell_text and m['table'] == current_table for m in matches):
+              matches.append({'guest': cell_text, 'table': current_table})
+
+    if not matches:
+      welcome_label.config(text='❌ Guest not found')
+      guest_name_label.config(text='', font=('Century Gothic', 20, 'bold'), fg='#1a1a2e')
+      message_label.config(text='Please check spelling and try again.')
+      result_table_label.config(text='')
+    elif len(matches) == 1:
+      # Single match found (Stars removed from name, color set to black)
+      welcome_label.config(text='— W E L C O M E —')
+      guest_name_label.config(text=f"{matches[0]['guest']}", font=('Century Gothic', 20, 'bold'), fg='#1a1a2e')
+      message_label.config(
+          text='We are overjoyed to celebrate our special day with you! 💕'
+      )
+      result_table_label.config(text=f"⭐ {matches[0]['table']} ⭐")
+    else:
+      # Multiple matches found (e.g., Rogayah & Datin Rogayah)
+      welcome_label.config(text='— MULTIPLE GUESTS FOUND —')
+      
+      # Format list of matching guests and their tables cleanly
+      results_text = '\n'.join([f"• {m['guest']} ({m['table']})" for m in matches])
+      
+      guest_name_label.config(text=results_text, font=('Century Gothic', 12, 'bold'), fg='#1a1a2e')
+      message_label.config(text='Please check the list above for the correct name.')
+      result_table_label.config(text='')
+
+  except Exception as err:
+    messagebox.showerror('Search Error', f'An error occurred during search: {err}')
+
+
+# --- UI Setup (Starts in Full Screen / Maximized) ---
+root = tk.Tk()
+root.title('Hasif & Ikha Reception 🌸')
+root.state('zoomed')  # Opens automatically maximized in full screen!
+root.minsize(450, 700)
+
+# --- BACKGROUND IMAGE SETUP (Using Border.png) ---
+try:
+  img_path = 'Border.png'
+  original_image = Image.open(img_path)
+except Exception as e:
+  original_image = None
+  print(
+      'Could not load Border.png. Make sure it is in the exact same folder as'
+      ' app.py'
   )
 
-# --- RESULTS SECTION ---
-if query:
-  query_clean = query.strip().lower()
-  results = df[
-      df['Name'].astype(str).str.lower().str.contains(query_clean, na=False)
-  ]
+# Use a canvas to make sure the background image scales smoothly and reliably
+canvas = tk.Canvas(root, highlightthickness=0)
+canvas.pack(fill='both', expand=True)
 
-  if results.empty:
-    st.markdown(
-        '<div class="welcome-text" style="color: #c70039;">❌ Guest not'
-        ' found</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="msg-text">Please check your spelling and try again.</div>',
-        unsafe_allow_html=True,
-    )
-  else:
-    row = results.iloc[0]
-    guest_name = row['Name']
-    table_no = row['Table No.']
+bg_image_tk = None
 
-    st.markdown(
-        '<div class="welcome-text">— W E L C O M E —</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        f'<div class="guest-name">✨ {guest_name} ✨</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="msg-text">We are overjoyed to celebrate our special day with'
-        ' you! 💕</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        f'<div class="table-badge">⭐ Table {table_no} ⭐</div>',
-        unsafe_allow_html=True,
-    )
 
-# --- BOTTOM DECORATIVE IMAGES (123.png & 234.png) ---
-st.markdown(
-    """
-    <div class="bottom-images-container">
-        <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/123.png" alt="Reception Photo 1">
-        <img src="https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/234.png" alt="Reception Photo 2">
-    </div>
-""",
-    unsafe_allow_html=True,
+def redraw_background(event):
+  global bg_image_tk
+  if original_image:
+    width = event.width
+    height = event.height
+    if width > 10 and height > 10:
+      resized_img = original_image.resize(
+          (width, height), Image.Resampling.LANCZOS
+      )
+      bg_image_tk = ImageTk.PhotoImage(resized_img)
+      canvas.create_image(0, 0, image=bg_image_tk, anchor='nw')
+
+
+canvas.bind('<Configure>', redraw_background)
+
+
+# --- MAIN CONTENT CARD CONTAINER ---
+card_bg = '#f5f6f8'
+card_frame = tk.Frame(root, bg=card_bg, bd=0)
+card_window = canvas.create_window(
+    0, 0, window=card_frame, anchor='center', width=430, height=540
 )
+
+
+def center_card(event):
+  canvas.coords(card_window, event.width / 2, event.height / 2)
+
+
+canvas.bind('<Configure>', center_card, add='+')
+
+
+# --- TOP SECTION (Title & Search) ---
+top_frame = tk.Frame(card_frame, bg=card_bg)
+top_frame.pack(side='top', fill='x', pady=(10, 0))
+
+title_label = tk.Label(
+    top_frame,
+    text='✦ Hasif & Ikha Reception ✦',
+    font=('Ink Free', 18, 'bold'),
+    bg=card_bg,
+    fg='#4a235a',
+)
+title_label.pack(pady=(5, 0))
+
+underline_label = tk.Label(
+    top_frame,
+    text='══════════════════',
+    font=('Segoe UI', 8, 'bold'),
+    bg=card_bg,
+    fg='#4a235a',
+)
+underline_label.pack(pady=(0, 4))
+
+search_sub_frame = tk.Frame(top_frame, bg=card_bg)
+search_sub_frame.pack(pady=2)
+
+entry = tk.Entry(
+    search_sub_frame,
+    width=24,
+    font=('Segoe UI', 10),
+    relief='solid',
+    bd=1,
+    justify='center',
+)
+entry.pack(ipady=3, pady=(0, 3))
+entry.bind('<Return>', search_name)
+
+search_btn = tk.Button(
+    search_sub_frame,
+    text='Find Table ✨',
+    command=search_name,
+    font=('Segoe UI', 9, 'bold'),
+    bg='#6c3483',
+    fg='white',
+    relief='flat',
+    padx=14,
+    pady=2,
+    cursor='hand2',
+)
+search_btn.pack()
+
+
+# --- DECORATIVE IMAGES SECTION (Anchored firmly at the bottom) ---
+image_frame = tk.Frame(card_frame, bg=card_bg)
+image_frame.pack(side='bottom', pady=(0, 10))
+
+
+def load_curved_image(path, target_w, target_h, radius=20):
+  """Resizes and crops image with smooth rounded corners."""
+  try:
+    img = Image.open(path).convert('RGBA')
+    
+    img_thumb = ImageOps.fit(
+        img, (target_w, target_h), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5)
+    )
+    
+    mask = Image.new('L', (target_w, target_h), 0)
+    from PIL import ImageDraw
+    draw = ImageDraw.Draw(mask)
+    draw.rounded_rectangle([(0, 0), (target_w, target_h)], radius=radius, fill=255)
+    
+    rounded_img = Image.new('RGBA', (target_w, target_h), (255, 255, 255, 0))
+    rounded_img.paste(img_thumb, (0, 0), mask=mask)
+    
+    return ImageTk.PhotoImage(rounded_img)
+  except Exception as e:
+    print(f'Could not load {path}: {e}')
+    return None
+
+
+# Large dimensions (190px wide by 140px tall) with smooth 20px rounded corners
+img1_tk = load_curved_image('123.png', 190, 140, radius=20)
+if img1_tk:
+  img_label1 = tk.Label(image_frame, image=img1_tk, bg=card_bg)
+  img_label1.image = img1_tk
+  img_label1.pack(side='left', padx=6)
+
+img2_tk = load_curved_image('234.png', 190, 140, radius=20)
+if img2_tk:
+  img_label2 = tk.Label(image_frame, image=img2_tk, bg=card_bg)
+  img_label2.image = img2_tk
+  img_label2.pack(side='left', padx=6)
+
+
+# --- MIDDLE SECTION (Welcome -> Guest Name -> Message -> Table Number) ---
+middle_frame = tk.Frame(card_frame, bg=card_bg)
+middle_frame.pack(side='top', fill='both', expand=True)
+
+content_wrapper = tk.Frame(middle_frame, bg=card_bg)
+content_wrapper.place(relx=0.5, rely=0.40, anchor='center')
+
+# 1. WELCOME text on top
+welcome_label = tk.Label(
+    content_wrapper, text='', font=('Segoe UI', 9, 'bold'), bg=card_bg, fg='#7f8c8d'
+)
+welcome_label.pack(pady=(0, 2))
+
+# 2. Guest Name / Multiple Names list right below WELCOME (Size 20, Solid Black color, No Stars)
+guest_name_label = tk.Label(
+    content_wrapper,
+    text='',
+    font=('Century Gothic', 20, 'bold'),
+    bg=card_bg,
+    fg='#1a1a2e',
+    wraplength=400,
+    justify='center',
+)
+guest_name_label.pack(pady=(2, 6))
+
+message_label = tk.Label(
+    content_wrapper, text='', font=('Segoe UI', 8), bg=card_bg, fg='#555555', wraplength=400, justify='center'
+)
+message_label.pack(pady=(0, 6))
+
+# 3. Table Number at the bottom of the section (Size 20)
+result_table_label = tk.Label(
+    content_wrapper,
+    text='',
+    font=('Segoe UI', 20, 'bold'),
+    bg=card_bg,
+    fg='#c70039',
+)
+result_table_label.pack(pady=(2, 0))
+
+root.mainloop()
