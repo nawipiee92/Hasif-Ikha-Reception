@@ -59,22 +59,24 @@ st.markdown(
         box-shadow: 0px 4px 15px rgba(0,0,0,0.10);
     }
 
-    /* Title Header with integrated sparkles */
+    /* Title Header styling with balanced left/right sparkles */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: clamp(24px, 6vw, 30px);
+        font-size: clamp(23px, 5.5vw, 29px);
         font-weight: bold;
         color: #4a235a;
         margin-bottom: 2px;
         text-align: center;
+        white-space: nowrap;
     }
     
-    .underline {
-        color: #4a235a;
-        font-weight: bold;
-        letter-spacing: 2px;
-        margin-bottom: 25px;
-        font-size: 13px;
+    /* Clean professional double underline HTML element */
+    .double-underline {
+        border-top: 2px solid #4a235a;
+        border-bottom: 1px solid #4a235a;
+        height: 3px;
+        width: 75%;
+        margin: 8px auto 25px auto;
     }
     
     .welcome-text {
@@ -119,12 +121,13 @@ st.markdown(
 )
 
 # --- APP LAYOUT ---
-# Combined the sparkles nicely inside the title line so it flows correctly
+# Sparkles are now properly positioned on both sides with the title in between
 st.markdown(
     '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
     unsafe_allow_html=True,
 )
-st.markdown('<div class="underline">══════════════════</div>', unsafe_allow_html=True)
+# Replaced text dashes with a sleek CSS double underline
+st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
 
 if df is None:
   st.error(
