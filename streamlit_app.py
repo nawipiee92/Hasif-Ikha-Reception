@@ -17,7 +17,7 @@ def load_data():
 
 df = load_data()
 
-# --- CUSTOM CSS FOR FROSTED GLASS CARD & STYLING ---
+# --- CUSTOM CSS FOR STYLING & EMBEDDING TITLE ---
 st.markdown(
     """
     <style>
@@ -25,7 +25,7 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap');
 
     /* Portrait mobile wallpaper scaling for Border.png */
-    .stApp {
+    stApp, .stApp {
         background-image: url("https://raw.githubusercontent.com/nawipiee92/Hasif-Ikha-Reception/main/Border.png");
         background-size: cover;
         background-position: center;
@@ -39,61 +39,38 @@ st.markdown(
     
     /* Container alignment and phone-compatible width */
     .block-container {
-        padding-top: 15vh;
+        padding-top: 18vh;
         padding-left: 1.2rem;
         padding-right: 1.2rem;
         max-width: 420px;
         text-align: center;
     }
     
-    /* Target Streamlit's block container to act as our unified frosted glass box */
-    div.element-container:has(.glass-card-marker) {
-        display: none;
-    }
-
-    /* Custom styled wrapper for the title and input */
-    .unified-card {
-        background-color: rgba(240, 244, 248, 0.92);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        padding: 30px 20px 20px 20px;
-        box-shadow: 0px 8px 32px rgba(74, 35, 90, 0.15);
-        margin-bottom: 25px;
-        text-align: center;
-    }
-    
-    /* Search box styling inside the unified card */
-    .stTextInput {
-        text-align: center;
-        margin: 0 auto;
-    }
-    
+    /* Style the main search widget container box to look gorgeous and translucent */
     div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.98) !important;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: inset 0px 2px 4px rgba(0,0,0,0.06);
+        background-color: rgba(255, 255, 255, 0.92) !important;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 8px 25px rgba(74, 35, 90, 0.15);
+        padding: 10px;
     }
 
-    /* Title Header styling */
+    /* Title Header styling inside or above the box */
     .title-text {
         font-family: 'Ink Free', cursive, sans-serif;
-        font-size: clamp(22px, 5vw, 28px);
+        font-size: clamp(24px, 5.5vw, 30px);
         font-weight: bold;
         color: #4a235a;
         margin-bottom: 2px;
         text-align: center;
-        white-space: nowrap;
     }
     
-    /* Clean professional double underline HTML element */
+    /* Clean professional double underline */
     .double-underline {
         border-top: 2px solid #4a235a;
         border-bottom: 1px solid #4a235a;
         height: 3px;
-        width: 70%;
+        width: 75%;
         margin: 8px auto 20px auto;
     }
     
@@ -102,7 +79,7 @@ st.markdown(
         font-size: 13px;
         font-weight: bold;
         color: #2c3e50;
-        margin-top: 15px;
+        margin-top: 25px;
         letter-spacing: 1.5px;
         text-align: center;
         text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
@@ -143,17 +120,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- APP LAYOUT WITH UNIFIED FROSTED CONTAINER ---
-st.markdown('<div class="unified-card">', unsafe_allow_html=True)
-
-# Title & Double Underline placed inside the card
-st.markdown(
-    '<div class="title-text">✦ Hasif & Ikha Reception ✦</div>',
-    unsafe_allow_html=True,
-)
-st.markdown('<div class="double-underline"></div>', unsafe_allow_html=True)
-
-# Search input box placed directly inside the same card box
+# --- APP LAYOUT ---
 if df is None:
   st.error(
       '⚠️ Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
@@ -161,11 +128,12 @@ if df is None:
   )
   query = ''
 else:
+  # Using Streamlit text input label to cleanly host the title inside the box wrapper
   query = st.text_input(
-      '', placeholder='Type your name here...', label_visibility='collapsed'
+      '✦ Hasif & Ikha Reception ✦',
+      placeholder='Type your name here...',
+      help='Search guest name',
   )
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 # --- RESULTS SECTION ---
 if query:
