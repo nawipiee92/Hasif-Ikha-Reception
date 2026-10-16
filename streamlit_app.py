@@ -1,3 +1,4 @@
+import base64
 import os
 import pandas as pd
 from PIL import Image, ImageOps
@@ -10,6 +11,16 @@ st.set_page_config(
     layout='centered',
 )
 
+# --- FUNCTION TO CONVERT IMAGE TO BASE64 FOR CSS BACKGROUND ---
+def get_base64_image(image_path):
+  if os.path.exists(image_path):
+    with open(image_path, 'rb') as f:
+      data = f.read()
+    return base64.b64encode(data).decode()
+  return ''
+
+bg_base64 = get_base64_image('Border.png')
+
 # --- LOAD EXCEL FILE SAFELY ---
 @st.cache_data
 def load_data():
@@ -20,12 +31,12 @@ def load_data():
 
 df_raw = load_data()
 
-# --- CUSTOM CSS STYLING (With Border.png Background) ---
+# --- CUSTOM CSS STYLING ---
 st.markdown(
-    """
+    f"""
     <style>
-    .stApp {
-        background-image: url("Border.png");
+    .stApp {{
+        background-image: url("data:image/png;base64,{bg_base64}");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -33,51 +44,51 @@ st.markdown(
     }
     
     /* Main Content Container Card */
-    .main-card {
+    .main-card {{
         background-color: rgba(245, 246, 248, 0.95);
         padding: 30px;
         border-radius: 20px;
         box-shadow: 0px 4px 20px rgba(0,0,0,0.15);
         max-width: 500px;
         margin: auto;
-    }
+    }}
 
-    .title-text {
+    .title-text {{
         text-align: center;
         font-family: 'Ink Free', cursive, sans-serif;
         font-size: 26px;
         font-weight: bold;
         color: #4a235a;
-    }
-    .welcome-text {
+    }}
+    .welcome-text {{
         text-align: center;
         font-size: 14px;
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
         margin-top: 25px;
-    }
-    .guest-name {
+    }}
+    .guest-name {{
         text-align: center;
         font-family: 'Century Gothic', sans-serif;
         font-size: 20px;
         font-weight: bold;
         color: #1a1a2e;
         margin-top: 10px;
-    }
-    .message-text {
+    }}
+    .message-text {{
         text-align: center;
         font-size: 13px;
         color: #555555;
         margin-top: 10px;
-    }
-    .table-text {
+    }}
+    .table-text {{
         text-align: center;
         font-size: 20px;
         font-weight: bold;
         color: #c70039;
         margin-top: 15px;
-    }
+    }}
     </style>
     """,
     unsafe_allow_html=True,
