@@ -192,14 +192,14 @@ else:
                             and cell_lower != 'no'
                             and not cell_text.isdigit()
                         ):
-                            # Fallback inline layout check: if a table number is written inside this exact row element
+                            # Fallback inline layout check
                             row_table = current_table
                             for inline_val in row_str_values:
                                 if ('table' in inline_val.lower() or 'meja' in inline_val.lower()) and inline_val != cell_text:
                                     row_table = inline_val
                                     break
                             
-                            # Append matches freely without blocking multiple items sharing identical values
+                            # Append matches freely
                             matches.append({'guest': cell_text, 'table': row_table})
 
             # Display Search Results
@@ -229,7 +229,6 @@ else:
                 )
                 
             else:
-                # Triggers perfectly if 2, 4, or more matching occurrences are caught
                 st.markdown(
                     '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
                     unsafe_allow_html=True,
@@ -239,6 +238,12 @@ else:
                 )
                 st.markdown(
                     f'<div style="text-align: center; color: #1a1a2e; font-size:15px; margin-top: 10px; line-height: 1.8;">{results_list}</div>',
+                    unsafe_allow_html=True,
+                )
+                
+                # --- CALCULATE AND SHOW THE TOTAL BLOCK HERE ---
+                st.markdown(
+                    f'<div style="text-align: center; font-weight: bold; color: #4a235a; font-size: 16px; margin-top: 15px; margin-bottom: 5px;">(Total - {len(matches)})</div>',
                     unsafe_allow_html=True,
                 )
                 st.info('Multiple matches found. Please find your full name in the list above!')
