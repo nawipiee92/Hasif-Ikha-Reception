@@ -31,7 +31,6 @@ st.markdown(f"""
     .title-box {{ background-color: #ffffff; border: 1.5px solid #e0e0e0; padding: 16px 20px; border-radius: 50px; text-align: center; box-shadow: 0px 3px 15px rgba(0,0,0,0.1); margin-bottom: 18px; }}
     .title-text {{ font-family: 'Ink Free', cursive, sans-serif; font-size: 32px; font-weight: bold; color: #4a235a; margin: 0; }}
     
-    /* INPUT FIELD STYLING: WHITE TEXT ON BLACK/DARK INPUT BAR */
     div[data-testid="stTextInput"] label {{ color: #000000 !important; font-weight: 900 !important; font-size: 26px !important; background-color: #ffffff !important; padding: 6px 14px !important; border-radius: 8px !important; border: 2px solid #1a1a2e !important; display: inline-block !important; margin-bottom: 8px !important; box-shadow: 0px 2px 6px rgba(0,0,0,0.1) !important; }}
     div[data-testid="stTextInput"] input {{ color: #ffffff !important; font-size: 24px !important; font-weight: bold !important; }}
     div[data-testid="stFormSubmitButton"] button {{ font-size: 24px !important; font-weight: bold !important; padding: 12px 0px !important; }}
@@ -41,7 +40,6 @@ st.markdown(f"""
     .message-text {{ text-align: center; font-size: 22px; color: #333333; margin-top: 12px; font-weight: bold; }}
     .table-text {{ text-align: center; font-size: 40px; font-weight: bold; color: #c70039; margin-top: 14px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #c70039; }}
     
-    /* HIGH READABILITY TRANSLUCENT GREY/WHITE CONTRAST BOX FOR MULTIPLE RESULTS */
     .multiple-results-box {{ background-color: rgba(245, 245, 245, 0.98); padding: 22px; border-radius: 18px; border: 3px solid #4a235a; margin-top: 15px; box-shadow: 0px 5px 20px rgba(0,0,0,0.15); }}
     .multiple-title {{ text-align: center; font-size: 28px; font-weight: 900; color: #4a235a !important; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 2px dashed #4a235a; padding-bottom: 8px; }}
     .result-item-text {{ font-size: 28px !important; color: #000000 !important; font-weight: bold !important; line-height: 1.9; text-align: left; padding-left: 10px; }}
@@ -102,7 +100,6 @@ else:
                 st.markdown('<div class="message-text">We are overjoyed to celebrate our special day with you! 💕</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="table-text">⭐ {matches[0]["table"]} ⭐</div>', unsafe_allow_html=True)
             else:
-                # Combined unified HTML block presentation prevents style splitting bugs
                 results_html = '<br>'.join([f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'><b>{m['table']}</b></span>" for m in matches])
                 
                 full_display_box = f"""
