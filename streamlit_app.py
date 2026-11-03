@@ -146,14 +146,6 @@ st.markdown(
     }}
     
     /* READABILITY ENHANCEMENTS FOR MULTIPLE RESULT BOX LISTS */
-    .result-container-box {{
-        background-color: #ffffff;
-        border: 3px solid #1a1a2e;
-        border-radius: 16px;
-        padding: 15px;
-        margin-top: 15px;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
-    }}
     .result-item-text {{
         font-size: 28px !important;
         color: #000000 !important;
@@ -302,3 +294,7 @@ else:
                     unsafe_allow_html=True,
                 )
                 
+                # --- CALCULATE AND SHOW THE TOTAL BADGE HERE ---
+                st.markdown(
+                    f'<div class="total-badge-text">(Total - {len(matches)})</div>',
+                    unsafe_allow_html=True,
