@@ -13,7 +13,7 @@ def get_base64_image(image_path):
 
 bg_base64 = get_base64_image('Border.png')
 
-@st.cache_data(ttl=1) # Clears cache automatically to fetch updated Excel instantly
+@st.cache_data(ttl=1)
 def load_data():
     try:
         return pd.read_excel('names.xlsx', header=None)
@@ -32,7 +32,10 @@ st.markdown(f"""
     .title-text {{ font-family: 'Ink Free', cursive, sans-serif; font-size: 32px; font-weight: bold; color: #4a235a; margin: 0; }}
     
     div[data-testid="stTextInput"] label {{ color: #000000 !important; font-weight: 900 !important; font-size: 26px !important; background-color: #ffffff !important; padding: 6px 14px !important; border-radius: 8px !important; border: 2px solid #1a1a2e !important; display: inline-block !important; margin-bottom: 8px !important; box-shadow: 0px 2px 6px rgba(0,0,0,0.1) !important; }}
-    div[data-testid="stTextInput"] input {{ color: #000000 !important; font-size: 24px !important; font-weight: bold !important; }}
+    
+    /* INPUT FIELD BACKGROUND & TEXT COLOR */
+    div[data-testid="stTextInput"] input {{ color: #ffffff !important; background-color: #1a1a2e !important; font-size: 24px !important; font-weight: bold !important; -webkit-text-fill-color: #ffffff !important; }}
+    
     div[data-testid="stFormSubmitButton"] button {{ font-size: 24px !important; font-weight: bold !important; padding: 12px 0px !important; }}
     
     .welcome-text {{ text-align: center; font-size: 24px; font-weight: bold; color: #7f8c8d; letter-spacing: 2px; margin-top: 15px; }}
@@ -73,22 +76,18 @@ else:
                 
                 joined_row_str = " ".join(row_vals).lower()
                 
-                # Check if this row denotes a table section header (like VIP 4, VIP 5, VVIP Table, etc.)
                 if any(keyword in joined_row_str for keyword in ['table', 'vip', 'meja']):
-                    # Pick the most meaningful text in the row as the table name
                     for val in row_vals:
                         if any(k in val.lower() for k in ['table', 'vip', 'meja']) or len(row_vals) == 1:
                             current_table = val
                             break
                     continue
 
-                # Process guest names in the row (skipping number columns like 1, 2, 3...)
                 for val in row.values:
                     if pd.notna(val):
                         cell_text = str(val).strip()
                         cell_lower = cell_text.lower()
                         
-                        # Filter out table headings, numbers, and short noise tags
                         if cell_lower != 'no' and not cell_text.isdigit() and 'vip' not in cell_lower and 'table' not in cell_lower and 'meja' not in cell_lower:
                             if query in cell_lower:
                                 matches.append({'guest': cell_text, 'table': current_table})
