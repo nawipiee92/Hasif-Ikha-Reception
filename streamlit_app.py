@@ -58,7 +58,7 @@ st.markdown(
         padding: 20px 15px;
         border-radius: 20px;
         box-shadow: 0px 4px 25px rgba(0,0,0,0.15);
-        max-width: 480px;
+        max-width: 520px;
         margin: 0 auto;
     }}
     /* Larger & Prominent Title Box brought further up */
@@ -78,9 +78,34 @@ st.markdown(
         color: #4a235a;
         margin: 0;
     }}
+    
+    /* READABILITY ENHANCEMENTS FOR ENTER GUEST NAME SECTION */
+    div[data-testid="stTextInput"] label {{
+        color: #000000 !important;
+        font-weight: 900 !important;
+        font-size: 24px !important;
+        background-color: #ffffff !important;
+        padding: 4px 14px !important;
+        border-radius: 8px !important;
+        border: 2px solid #1a1a2e !important;
+        display: inline-block !important;
+        margin-bottom: 8px !important;
+        box-shadow: 0px 2px 6px rgba(0,0,0,0.1) !important;
+    }}
+    div[data-testid="stTextInput"] input {{
+        color: #000000 !important;
+        font-size: 22px !important;
+        font-weight: bold !important;
+    }}
+    div[data-testid="stFormSubmitButton"] button {{
+        font-size: 22px !important;
+        font-weight: bold !important;
+        padding: 10px 0px !important;
+    }}
+
     .welcome-text {{
         text-align: center;
-        font-size: 13px;
+        font-size: 22px;
         font-weight: bold;
         color: #7f8c8d;
         letter-spacing: 2px;
@@ -89,25 +114,69 @@ st.markdown(
     .guest-name {{
         text-align: center;
         font-family: 'Century Gothic', sans-serif;
-        font-size: 18px;
+        font-size: 36px;
         font-weight: bold;
         color: #1a1a2e;
         margin-top: 6px;
         word-break: break-word;
+        background-color: #ffffff;
+        padding: 12px;
+        border-radius: 12px;
+        border: 2px solid #e0e0e0;
+        box-shadow: 0px 3px 10px rgba(0,0,0,0.05);
     }}
     .message-text {{
         text-align: center;
-        font-size: 12px;
-        color: #555555;
-        margin-top: 6px;
+        font-size: 20px;
+        color: #333333;
+        margin-top: 10px;
+        font-weight: 500;
     }}
     .table-text {{
         text-align: center;
-        font-size: 18px;
+        font-size: 36px;
         font-weight: bold;
         color: #c70039;
-        margin-top: 10px;
+        margin-top: 14px;
+        background-color: #ffffff;
+        padding: 12px;
+        border-radius: 12px;
+        border: 2px solid #c70039;
+        box-shadow: 0px 3px 12px rgba(199,0,57,0.15);
     }}
+    
+    /* READABILITY ENHANCEMENTS FOR MULTIPLE RESULT BOX LISTS */
+    .result-container-box {{
+        background-color: #ffffff;
+        border: 3px solid #1a1a2e;
+        border-radius: 16px;
+        padding: 15px;
+        margin-top: 15px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    }}
+    .result-item {{
+        font-size: 28px !important;
+        color: #000000 !important;
+        font-weight: bold !important;
+        padding: 8px 4px;
+        border-bottom: 1px dashed #cccccc;
+    }}
+    .result-item:last-child {{
+        border-bottom: none;
+    }}
+    .total-badge-box {{
+        text-align: center;
+        font-weight: 900;
+        color: #ffffff;
+        background-color: #4a235a;
+        font-size: 30px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0px 3px 10px rgba(74,35,90,0.3);
+    }}
+
     /* Full side-by-side images without cropping */
     .stImage img {{
         border-radius: 12px;
@@ -199,13 +268,13 @@ else:
                                     row_table = inline_val
                                     break
                             
-                            # Append matches freely
+                            # Append matches freely without blocking multiple items sharing identical values
                             matches.append({'guest': cell_text, 'table': row_table})
 
             # Display Search Results
             if not matches:
                 st.markdown(
-                    '<div class="welcome-text" style="color: #c70039;">❌ Guest not found</div>',
+                    '<div class="welcome-text" style="color: #c70039; font-size: 26px;">❌ Guest not found</div>',
                     unsafe_allow_html=True,
                 )
                 st.info('Please check the spelling and try again.')
@@ -230,33 +299,7 @@ else:
                 
             else:
                 st.markdown(
-                    '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
-                    unsafe_allow_html=True,
-                )
-                results_list = '<br>'.join(
-                    [f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches]
-                )
-                st.markdown(
-                    f'<div style="text-align: center; color: #1a1a2e; font-size:15px; margin-top: 10px; line-height: 1.8;">{results_list}</div>',
+                    '<div class="welcome-text" style="font-size: 24px;">— MULTIPLE GUESTS FOUND —</div>',
                     unsafe_allow_html=True,
                 )
                 
-                # --- CALCULATE AND SHOW THE TOTAL BLOCK HERE ---
-                st.markdown(
-                    f'<div style="text-align: center; font-weight: bold; color: #4a235a; font-size: 16px; margin-top: 15px; margin-bottom: 5px;">(Total - {len(matches)})</div>',
-                    unsafe_allow_html=True,
-                )
-                st.info('Multiple matches found. Please find your full name in the list above!')
-
-    # --- SIDE-BY-SIDE FULL IMAGES SECTION ---
-    st.write('')
-    col1, col2 = st.columns(2)
-    with col1:
-        if os.path.exists('123.png'):
-            st.image('123.png', use_container_width=True)
-    with col2:
-        if os.path.exists('234.png'):
-            st.image('234.png', use_container_width=True)
-
-# --- END OF MAIN WHITE CARD BOX ---
-st.markdown('</div>', unsafe_allow_html=True)
