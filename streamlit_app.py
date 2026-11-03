@@ -166,7 +166,7 @@ else:
             for index, row in df_raw.iterrows():
                 row_str_values = [str(val).strip() for val in row.values if pd.notna(val)]
                 
-                # Check if this entire row is a standalone Table Header block
+                # Check if this entire row acts as a standalone Table section block
                 is_table_header_row = False
                 for val in row_str_values:
                     if 'table' in val.lower() or 'meja' in val.lower():
@@ -174,17 +174,17 @@ else:
                         is_table_header_row = True
                         break
                 
-                # If it's a standalone header row, don't look for guest names inside it
+                # If it's a structural section header block row, don't look for individual guest matches inside it
                 if is_table_header_row and len(row_str_values) <= 2:
                     continue
 
-                # Check individual cells for matching guest name
+                # Check EVERY individual column cell independently in this row
                 for val in row.values:
                     if pd.notna(val):
                         cell_text = str(val).strip()
                         cell_lower = cell_text.lower()
                         
-                        # Match query logic (skip rows labeled table/meja/no/numbers)
+                        # Match logic (skipping non-name designations)
                         if (
                             query in cell_lower 
                             and 'table' not in cell_lower 
@@ -192,16 +192,15 @@ else:
                             and cell_lower != 'no'
                             and not cell_text.isdigit()
                         ):
-                            # Fallback support if table number is written inside the SAME row in another column
+                            # Fallback inline layout check: if a table number is written inside this exact row element
                             row_table = current_table
                             for inline_val in row_str_values:
                                 if ('table' in inline_val.lower() or 'meja' in inline_val.lower()) and inline_val != cell_text:
                                     row_table = inline_val
                                     break
                             
-                            # Prevent exact absolute duplicates
-                            if not any(m['guest'] == cell_text and m['table'] == row_table for m in matches):
-                                matches.append({'guest': cell_text, 'table': row_table})
+                            # Append matches freely without blocking multiple items sharing identical values
+                            matches.append({'guest': cell_text, 'table': row_table})
 
             # Display Search Results
             if not matches:
@@ -230,7 +229,7 @@ else:
                 )
                 
             else:
-                # This explicitly handles 2 or more matches (like searching "Adib")
+                # Triggers perfectly if 2, 4, or more matching occurrences are caught
                 st.markdown(
                     '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
                     unsafe_allow_html=True,
