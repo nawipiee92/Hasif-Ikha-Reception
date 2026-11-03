@@ -199,7 +199,7 @@ else:
                                     row_table = inline_val
                                     break
                             
-                            # Prevent duplicates
+                            # Prevent exact absolute duplicates
                             if not any(m['guest'] == cell_text and m['table'] == row_table for m in matches):
                                 matches.append({'guest': cell_text, 'table': row_table})
 
@@ -230,6 +230,7 @@ else:
                 )
                 
             else:
+                # This explicitly handles 2 or more matches (like searching "Adib")
                 st.markdown(
                     '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
                     unsafe_allow_html=True,
@@ -238,10 +239,10 @@ else:
                     [f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches]
                 )
                 st.markdown(
-                    f'<div style="text-align: center; color: #1a1a2e; font-size:15px; margin-top: 10px;">{results_list}</div>',
+                    f'<div style="text-align: center; color: #1a1a2e; font-size:15px; margin-top: 10px; line-height: 1.8;">{results_list}</div>',
                     unsafe_allow_html=True,
                 )
-                st.info('Please check the list above for your correct name.')
+                st.info('Multiple matches found. Please find your full name in the list above!')
 
     # --- SIDE-BY-SIDE FULL IMAGES SECTION ---
     st.write('')
