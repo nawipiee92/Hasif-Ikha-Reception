@@ -41,11 +41,11 @@ st.markdown(f"""
     .message-text {{ text-align: center; font-size: 22px; color: #333333; margin-top: 12px; font-weight: bold; }}
     .table-text {{ text-align: center; font-size: 40px; font-weight: bold; color: #c70039; margin-top: 14px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #c70039; }}
     
-    /* HIGH READABILITY TRANSLUCENT GREY BOX FOR MULTIPLE RESULTS */
-    .multiple-results-box {{ background-color: rgba(40, 44, 52, 0.85); padding: 20px; border-radius: 16px; border: 2px solid #1a1a2e; margin-top: 15px; box-shadow: 0px 4px 15px rgba(0,0,0,0.2); }}
-    .multiple-title {{ text-align: center; font-size: 26px; font-weight: bold; color: #ffffff !important; letter-spacing: 1px; margin-bottom: 12px; }}
-    .result-item-text {{ font-size: 28px !important; color: #ffffff !important; font-weight: bold !important; line-height: 1.8; text-align: center; }}
-    .total-badge-text {{ text-align: center; font-weight: bold; color: #ffeb3b; font-size: 32px; margin-top: 18px; margin-bottom: 5px; }}
+    /* HIGH READABILITY TRANSLUCENT GREY/WHITE CONTRAST BOX FOR MULTIPLE RESULTS */
+    .multiple-results-box {{ background-color: rgba(245, 245, 245, 0.98); padding: 22px; border-radius: 18px; border: 3px solid #4a235a; margin-top: 15px; box-shadow: 0px 5px 20px rgba(0,0,0,0.15); }}
+    .multiple-title {{ text-align: center; font-size: 28px; font-weight: 900; color: #4a235a !important; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 2px dashed #4a235a; padding-bottom: 8px; }}
+    .result-item-text {{ font-size: 28px !important; color: #000000 !important; font-weight: bold !important; line-height: 1.9; text-align: left; padding-left: 10px; }}
+    .total-badge-text {{ text-align: center; font-weight: 900; color: #c70039; font-size: 32px; margin-top: 20px; margin-bottom: 5px; border-top: 2px dashed #4a235a; padding-top: 8px; }}
     
     .stImage img {{ border-radius: 12px; object-fit: contain !important; width: 100% !important; height: auto !important; }}
     </style>
@@ -102,13 +102,17 @@ else:
                 st.markdown('<div class="message-text">We are overjoyed to celebrate our special day with you! 💕</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="table-text">⭐ {matches[0]["table"]} ⭐</div>', unsafe_allow_html=True)
             else:
-                # Wrap multiple entries layout completely into the new high-contrast box container
-                st.markdown('<div class="multiple-results-box">', unsafe_allow_html=True)
-                st.markdown('<div class="multiple-title">— MULTIPLE GUESTS FOUND —</div>', unsafe_allow_html=True)
-                results_list = '<br>'.join([f"• <b>{m['guest']}</b> -> <span style='color: #ff4d4d;'>{m['table']}</span>" for m in matches])
-                st.markdown(f'<div class="result-item-text">{results_list}</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="total-badge-text">(Total - {len(matches)})</div>', unsafe_allow_html=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+                # Combined unified HTML block presentation prevents style splitting bugs
+                results_html = '<br>'.join([f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'><b>{m['table']}</b></span>" for m in matches])
+                
+                full_display_box = f"""
+                <div class="multiple-results-box">
+                    <div class="multiple-title">— MULTIPLE GUESTS FOUND —</div>
+                    <div class="result-item-text">{results_html}</div>
+                    <div class="total-badge-text">(Total - {len(matches)})</div>
+                </div>
+                """
+                st.markdown(full_display_box, unsafe_allow_html=True)
                 st.info('Multiple matches found. Please find your full name in the list above!')
 
     st.write('')
