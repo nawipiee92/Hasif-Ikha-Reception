@@ -13,7 +13,7 @@ def get_base64_image(image_path):
 
 bg_base64 = get_base64_image('Border.png')
 
-@st.cache_data
+@st.cache_data(ttl=1) # Clears cache automatically to fetch updated Excel instantly
 def load_data():
     try:
         return pd.read_excel('names.xlsx', header=None)
@@ -32,18 +32,18 @@ st.markdown(f"""
     .title-text {{ font-family: 'Ink Free', cursive, sans-serif; font-size: 32px; font-weight: bold; color: #4a235a; margin: 0; }}
     
     div[data-testid="stTextInput"] label {{ color: #000000 !important; font-weight: 900 !important; font-size: 26px !important; background-color: #ffffff !important; padding: 6px 14px !important; border-radius: 8px !important; border: 2px solid #1a1a2e !important; display: inline-block !important; margin-bottom: 8px !important; box-shadow: 0px 2px 6px rgba(0,0,0,0.1) !important; }}
-    div[data-testid="stTextInput"] input {{ color: #ffffff !important; font-size: 24px !important; font-weight: bold !important; }}
+    div[data-testid="stTextInput"] input {{ color: #000000 !important; font-size: 24px !important; font-weight: bold !important; }}
     div[data-testid="stFormSubmitButton"] button {{ font-size: 24px !important; font-weight: bold !important; padding: 12px 0px !important; }}
     
     .welcome-text {{ text-align: center; font-size: 24px; font-weight: bold; color: #7f8c8d; letter-spacing: 2px; margin-top: 15px; }}
     .guest-name {{ text-align: center; font-family: 'Century Gothic', sans-serif; font-size: 38px; font-weight: bold; color: #1a1a2e; margin-top: 8px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #e0e0e0; }}
     .message-text {{ text-align: center; font-size: 22px; color: #333333; margin-top: 12px; font-weight: bold; }}
-    .table-text {{ text-align: center; font-size: 40px; font-weight: bold; color: #c70039; margin-top: 14px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #c70039; }}
+    .table-text {{ text-align: center; font-size: 34px; font-weight: bold; color: #c70039; margin-top: 14px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #c70039; }}
     
     .multiple-results-box {{ background-color: rgba(245, 245, 245, 0.98); padding: 22px; border-radius: 18px; border: 3px solid #4a235a; margin-top: 15px; box-shadow: 0px 5px 20px rgba(0,0,0,0.15); }}
     .multiple-title {{ text-align: center; font-size: 28px; font-weight: 900; color: #4a235a !important; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 2px dashed #4a235a; padding-bottom: 8px; }}
-    .result-item-text {{ font-size: 28px !important; color: #000000 !important; font-weight: bold !important; line-height: 1.9; text-align: left; padding-left: 10px; }}
-    .total-badge-text {{ text-align: center; font-weight: 900; color: #c70039; font-size: 32px; margin-top: 20px; margin-bottom: 5px; border-top: 2px dashed #4a235a; padding-top: 8px; }}
+    .result-item-text {{ font-size: 24px !important; color: #000000 !important; font-weight: bold !important; line-height: 1.8; text-align: left; padding-left: 10px; }}
+    .total-badge-text {{ text-align: center; font-weight: 900; color: #c70039; font-size: 28px; margin-top: 20px; margin-bottom: 5px; border-top: 2px dashed #4a235a; padding-top: 8px; }}
     
     .stImage img {{ border-radius: 12px; object-fit: contain !important; width: 100% !important; height: auto !important; }}
     </style>
@@ -64,32 +64,34 @@ else:
             st.warning('Please enter a name to search.')
         else:
             matches = []
-            current_table = 'TABLE VIP Z1'
+            current_table = 'VVIP Table'
 
             for index, row in df_raw.iterrows():
-                row_str_values = [str(val).strip() for val in row.values if pd.notna(val)]
-                is_table_header_row = False
-                for val in row_str_values:
-                    if 'table' in val.lower() or 'meja' in val.lower():
-                        current_table = val
-                        is_table_header_row = True
-                        break
+                row_vals = [str(val).strip() for val in row.values if pd.notna(val)]
+                if not row_vals:
+                    continue
                 
-                if is_table_header_row and len(row_str_values) <= 2:
+                joined_row_str = " ".join(row_vals).lower()
+                
+                # Check if this row denotes a table section header (like VIP 4, VIP 5, VVIP Table, etc.)
+                if any(keyword in joined_row_str for keyword in ['table', 'vip', 'meja']):
+                    # Pick the most meaningful text in the row as the table name
+                    for val in row_vals:
+                        if any(k in val.lower() for k in ['table', 'vip', 'meja']) or len(row_vals) == 1:
+                            current_table = val
+                            break
                     continue
 
+                # Process guest names in the row (skipping number columns like 1, 2, 3...)
                 for val in row.values:
                     if pd.notna(val):
                         cell_text = str(val).strip()
                         cell_lower = cell_text.lower()
                         
-                        if query in cell_lower and 'table' not in cell_lower and 'meja' not in cell_lower and cell_lower != 'no' and not cell_text.isdigit():
-                            row_table = current_table
-                            for inline_val in row_str_values:
-                                if ('table' in inline_val.lower() or 'meja' in inline_val.lower()) and inline_val != cell_text:
-                                    row_table = inline_val
-                                    break
-                            matches.append({'guest': cell_text, 'table': row_table})
+                        # Filter out table headings, numbers, and short noise tags
+                        if cell_lower != 'no' and not cell_text.isdigit() and 'vip' not in cell_lower and 'table' not in cell_lower and 'meja' not in cell_lower:
+                            if query in cell_lower:
+                                matches.append({'guest': cell_text, 'table': current_table})
 
             if not matches:
                 st.markdown('<div class="welcome-text" style="color: #c70039; font-size: 26px;">❌ Guest not found</div>', unsafe_allow_html=True)
