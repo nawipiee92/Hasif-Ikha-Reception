@@ -30,15 +30,23 @@ st.markdown(f"""
     .main-card {{ background-color: rgba(255, 255, 255, 0.95); padding: 20px 15px; border-radius: 20px; box-shadow: 0px 4px 25px rgba(0,0,0,0.15); max-width: 520px; margin: 0 auto; }}
     .title-box {{ background-color: #ffffff; border: 1.5px solid #e0e0e0; padding: 16px 20px; border-radius: 50px; text-align: center; box-shadow: 0px 3px 15px rgba(0,0,0,0.1); margin-bottom: 18px; }}
     .title-text {{ font-family: 'Ink Free', cursive, sans-serif; font-size: 32px; font-weight: bold; color: #4a235a; margin: 0; }}
+    
+    /* INPUT FIELD STYLING: WHITE TEXT ON BLACK/DARK INPUT BAR */
     div[data-testid="stTextInput"] label {{ color: #000000 !important; font-weight: 900 !important; font-size: 26px !important; background-color: #ffffff !important; padding: 6px 14px !important; border-radius: 8px !important; border: 2px solid #1a1a2e !important; display: inline-block !important; margin-bottom: 8px !important; box-shadow: 0px 2px 6px rgba(0,0,0,0.1) !important; }}
-    div[data-testid="stTextInput"] input {{ color: #000000 !important; font-size: 24px !important; font-weight: bold !important; }}
+    div[data-testid="stTextInput"] input {{ color: #ffffff !important; font-size: 24px !important; font-weight: bold !important; }}
     div[data-testid="stFormSubmitButton"] button {{ font-size: 24px !important; font-weight: bold !important; padding: 12px 0px !important; }}
+    
     .welcome-text {{ text-align: center; font-size: 24px; font-weight: bold; color: #7f8c8d; letter-spacing: 2px; margin-top: 15px; }}
     .guest-name {{ text-align: center; font-family: 'Century Gothic', sans-serif; font-size: 38px; font-weight: bold; color: #1a1a2e; margin-top: 8px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #e0e0e0; }}
     .message-text {{ text-align: center; font-size: 22px; color: #333333; margin-top: 12px; font-weight: bold; }}
     .table-text {{ text-align: center; font-size: 40px; font-weight: bold; color: #c70039; margin-top: 14px; background-color: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #c70039; }}
-    .result-item-text {{ font-size: 28px !important; color: #000000 !important; font-weight: bold !important; line-height: 1.8; text-align: center; }}
-    .total-badge-text {{ text-align: center; font-weight: bold; color: #4a235a; font-size: 30px; margin-top: 20px; margin-bottom: 10px; }}
+    
+    /* HIGH READABILITY TRANSLUCENT GREY BOX FOR MULTIPLE RESULTS */
+    .multiple-results-box {{ background-color: rgba(40, 44, 52, 0.85); padding: 20px; border-radius: 16px; border: 2px solid #1a1a2e; margin-top: 15px; box-shadow: 0px 4px 15px rgba(0,0,0,0.2); }}
+    .multiple-title {{ text-align: center; font-size: 26px; font-weight: bold; color: #ffffff !important; letter-spacing: 1px; margin-bottom: 12px; }}
+    .result-item-text {{ font-size: 28px !important; color: #ffffff !important; font-weight: bold !important; line-height: 1.8; text-align: center; }}
+    .total-badge-text {{ text-align: center; font-weight: bold; color: #ffeb3b; font-size: 32px; margin-top: 18px; margin-bottom: 5px; }}
+    
     .stImage img {{ border-radius: 12px; object-fit: contain !important; width: 100% !important; height: auto !important; }}
     </style>
 """, unsafe_allow_html=True)
@@ -94,10 +102,13 @@ else:
                 st.markdown('<div class="message-text">We are overjoyed to celebrate our special day with you! 💕</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="table-text">⭐ {matches[0]["table"]} ⭐</div>', unsafe_allow_html=True)
             else:
-                st.markdown('<div class="welcome-text" style="font-size: 26px;">— MULTIPLE GUESTS FOUND —</div>', unsafe_allow_html=True)
-                results_list = '<br>'.join([f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches])
+                # Wrap multiple entries layout completely into the new high-contrast box container
+                st.markdown('<div class="multiple-results-box">', unsafe_allow_html=True)
+                st.markdown('<div class="multiple-title">— MULTIPLE GUESTS FOUND —</div>', unsafe_allow_html=True)
+                results_list = '<br>'.join([f"• <b>{m['guest']}</b> -> <span style='color: #ff4d4d;'>{m['table']}</span>" for m in matches])
                 st.markdown(f'<div class="result-item-text">{results_list}</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="total-badge-text">(Total - {len(matches)})</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
                 st.info('Multiple matches found. Please find your full name in the list above!')
 
     st.write('')
