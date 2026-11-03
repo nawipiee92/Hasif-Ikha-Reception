@@ -13,21 +13,21 @@ st.set_page_config(
 
 # --- FUNCTION TO CONVERT IMAGE TO BASE64 FOR CSS BACKGROUND ---
 def get_base64_image(image_path):
-  if os.path.exists(image_path):
-    with open(image_path, 'rb') as f:
-      data = f.read()
-    return base64.b64encode(data).decode()
-  return ''
+    if os.path.exists(image_path):
+        with open(image_path, 'rb') as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    return ''
 
 bg_base64 = get_base64_image('Border.png')
 
 # --- LOAD EXCEL FILE SAFELY ---
 @st.cache_data
 def load_data():
-  try:
-    return pd.read_excel('names.xlsx', header=None)
-  except Exception as e:
-    return None
+    try:
+        return pd.read_excel('names.xlsx', header=None)
+    except Exception as e:
+        return None
 
 df_raw = load_data()
 
@@ -45,7 +45,6 @@ st.markdown(
         padding-bottom: 2rem !important;
         margin-top: -20px !important;
     }}
-
     .stApp {{
         background-image: url("data:image/png;base64,{bg_base64}");
         background-size: cover;
@@ -53,7 +52,6 @@ st.markdown(
         background-repeat: no-repeat;
         background-attachment: fixed;
     }}
-    
     /* Main Content Container Card */
     .main-card {{
         background-color: rgba(255, 255, 255, 0.95);
@@ -63,7 +61,6 @@ st.markdown(
         max-width: 480px;
         margin: 0 auto;
     }}
-
     /* Larger & Prominent Title Box brought further up */
     .title-box {{
         background-color: #ffffff;
@@ -74,7 +71,6 @@ st.markdown(
         box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
         margin-bottom: 18px;
     }}
-
     .title-text {{
         font-family: 'Ink Free', cursive, sans-serif;
         font-size: 27px;
@@ -82,7 +78,6 @@ st.markdown(
         color: #4a235a;
         margin: 0;
     }}
-    
     .welcome-text {{
         text-align: center;
         font-size: 13px;
@@ -113,7 +108,6 @@ st.markdown(
         color: #c70039;
         margin-top: 10px;
     }}
-
     /* Full side-by-side images without cropping */
     .stImage img {{
         border-radius: 12px;
@@ -121,7 +115,6 @@ st.markdown(
         width: 100% !important;
         height: auto !important;
     }}
-
     @media (max-width: 480px) {{
         .main-card {{
             padding: 15px 10px;
@@ -150,101 +143,115 @@ st.markdown(
 )
 
 if df_raw is None:
-  st.error(
-      'Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
-      ' repository!'
-  )
+    st.error(
+        'Could not find "names.xlsx". Make sure it is uploaded in your GitHub'
+        ' repository!'
+    )
 else:
-  # Form allowing search via pressing Enter or clicking button
-  with st.form(key='search_form'):
-    query = st.text_input(
-        'Enter Guest Name:', placeholder='Type guest name here...'
-    ).strip().lower()
-    
-    submit_button = st.form_submit_button('Find Seating ✨', use_container_width=True)
+    # Form allowing search via pressing Enter or clicking button
+    with st.form(key='search_form'):
+        query = st.text_input(
+            'Enter Guest Name:', placeholder='Type guest name here...'
+        ).strip().lower()
+        submit_button = st.form_submit_button('Find Seating ✨', use_container_width=True)
 
-  if submit_button:
-    if not query:
-      st.warning('Please enter a name to search.')
-    else:
-      matches = []
-      current_table = 'TABLE VIP Z1'
+    if submit_button:
+        if not query:
+            st.warning('Please enter a name to search.')
+        else:
+            matches = []
+            current_table = 'TABLE VIP Z1'
 
-      # Scan through the Excel rows
-      for index, row in df_raw.iterrows():
-        row_str_values = [str(val).strip() for val in row.values if pd.notna(val)]
+            # Scan through the Excel rows
+            for index, row in df_raw.iterrows():
+                row_str_values = [str(val).strip() for val in row.values if pd.notna(val)]
+                
+                # Check if this entire row is a standalone Table Header block
+                is_table_header_row = False
+                for val in row_str_values:
+                    if 'table' in val.lower() or 'meja' in val.lower():
+                        current_table = val
+                        is_table_header_row = True
+                        break
+                
+                # If it's a standalone header row, don't look for guest names inside it
+                if is_table_header_row and len(row_str_values) <= 2:
+                    continue
 
-        # Update table header if found
-        for val in row_str_values:
-          if 'table' in val.lower():
-            current_table = val
-            break
+                # Check individual cells for matching guest name
+                for val in row.values:
+                    if pd.notna(val):
+                        cell_text = str(val).strip()
+                        cell_lower = cell_text.lower()
+                        
+                        # Match query logic (skip rows labeled table/meja/no/numbers)
+                        if (
+                            query in cell_lower 
+                            and 'table' not in cell_lower 
+                            and 'meja' not in cell_lower
+                            and cell_lower != 'no'
+                            and not cell_text.isdigit()
+                        ):
+                            # Fallback support if table number is written inside the SAME row in another column
+                            row_table = current_table
+                            for inline_val in row_str_values:
+                                if ('table' in inline_val.lower() or 'meja' in inline_val.lower()) and inline_val != cell_text:
+                                    row_table = inline_val
+                                    break
+                            
+                            # Prevent duplicates
+                            if not any(m['guest'] == cell_text and m['table'] == row_table for m in matches):
+                                matches.append({'guest': cell_text, 'table': row_table})
 
-        # Check cells for matching guest name
-        for val in row.values:
-          if pd.notna(val):
-            cell_text = str(val).strip()
-            cell_lower = cell_text.lower()
-            if (
-                query in cell_lower
-                and 'table' not in cell_lower
-                and cell_lower != 'no'
-            ):
-              if not any(
-                  m['guest'] == cell_text and m['table'] == current_table
-                  for m in matches
-              ):
-                matches.append({'guest': cell_text, 'table': current_table})
+            # Display Search Results
+            if not matches:
+                st.markdown(
+                    '<div class="welcome-text" style="color: #c70039;">❌ Guest not found</div>',
+                    unsafe_allow_html=True,
+                )
+                st.info('Please check the spelling and try again.')
+                
+            elif len(matches) == 1:
+                st.markdown(
+                    '<div class="welcome-text">— W E L C O M E —</div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f'<div class="guest-name">{matches[0]["guest"]}</div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    '<div class="message-text">We are overjoyed to celebrate our special day with you! 💕</div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f'<div class="table-text">⭐ {matches[0]["table"]} ⭐</div>',
+                    unsafe_allow_html=True,
+                )
+                
+            else:
+                st.markdown(
+                    '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
+                    unsafe_allow_html=True,
+                )
+                results_list = '<br>'.join(
+                    [f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches]
+                )
+                st.markdown(
+                    f'<div style="text-align: center; color: #1a1a2e; font-size:15px; margin-top: 10px;">{results_list}</div>',
+                    unsafe_allow_html=True,
+                )
+                st.info('Please check the list above for your correct name.')
 
-      if not matches:
-        st.markdown(
-            '<div class="welcome-text" style="color: #c70039;">❌ Guest not'
-            ' found</div>',
-            unsafe_allow_html=True,
-        )
-        st.info('Please check the spelling and try again.')
-      elif len(matches) == 1:
-        st.markdown(
-            '<div class="welcome-text">— W E L C O M E —</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f'<div class="guest-name">{matches[0]["guest"]}</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            '<div class="message-text">We are overjoyed to celebrate our'
-            ' special day with you! 💕</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f'<div class="table-text">⭐ {matches[0]["table"]} ⭐</div>',
-            unsafe_allow_html=True,
-        )
-      else:
-        st.markdown(
-            '<div class="welcome-text">— MULTIPLE GUESTS FOUND —</div>',
-            unsafe_allow_html=True,
-        )
-        results_list = '<br>'.join(
-            [f"• <b>{m['guest']}</b> -> <span style='color: #c70039;'>{m['table']}</span>" for m in matches]
-        )
-        st.markdown(
-            f'<div style="text-align: center; color: #1a1a2e;'
-            f' font-size:15px; margin-top: 10px;">{results_list}</div>',
-            unsafe_allow_html=True,
-        )
-        st.info('Please check the list above for the correct name.')
-
-  # --- SIDE-BY-SIDE FULL IMAGES SECTION ---
-  st.write('')
-  col1, col2 = st.columns(2)
-  with col1:
-    if os.path.exists('123.png'):
-      st.image('123.png', use_container_width=True)
-  with col2:
-    if os.path.exists('234.png'):
-      st.image('234.png', use_container_width=True)
+    # --- SIDE-BY-SIDE FULL IMAGES SECTION ---
+    st.write('')
+    col1, col2 = st.columns(2)
+    with col1:
+        if os.path.exists('123.png'):
+            st.image('123.png', use_container_width=True)
+    with col2:
+        if os.path.exists('234.png'):
+            st.image('234.png', use_container_width=True)
 
 # --- END OF MAIN WHITE CARD BOX ---
 st.markdown('</div>', unsafe_allow_html=True)
